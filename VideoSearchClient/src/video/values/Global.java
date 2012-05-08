@@ -1,7 +1,7 @@
 /**
  * 
  */
-package video.search;
+package video.values;
 
 /**
  * @author Administrator
@@ -9,4 +9,5 @@ package video.search;
  */
 public class Global {
 	public static int userid=0;
+	public static String userName="";
 }
