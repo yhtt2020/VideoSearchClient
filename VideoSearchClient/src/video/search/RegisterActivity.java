@@ -2,9 +2,11 @@ package video.search;
 
 import video.main.CommonOperation;
 import video.protocol.Engine;
+import video.values.Global;
 import video.values.HanderMessage;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -29,6 +31,7 @@ public class RegisterActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				RegisterActivity.this.finish();
+				
 			}
 		});
 		handler = new Handler() {
@@ -41,6 +44,8 @@ public class RegisterActivity extends Activity {
 					break;
 				case HanderMessage.OK:
 					CommonOperation.toast(RegisterActivity.this, "×¢²á³É¹¦¡£");
+					Intent intent=new Intent(RegisterActivity.this,UserCenterActivity.class);
+					startActivity(intent);
 					RegisterActivity.this.finish();
 					break;
 
@@ -107,6 +112,7 @@ public class RegisterActivity extends Activity {
 			}
 			if (Integer.parseInt(result) != 0) {
 				Global.userid = Integer.parseInt(result);
+				Global.userName=userName;
 				handler.sendEmptyMessage(HanderMessage.OK);
 				return;
 			}

@@ -51,9 +51,12 @@
           <activity android:name=".PrevVideoActivity"
               android:label="录像预览"
               />
+            <activity android:name=".UserCenterActivity"></activity>
           <activity android:name="com.google.ads.AdActivity"
               android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode"/>
+        
           <uses-library android:name="com.google.android.maps"/>
+          
     </application>
 
 </manifest>

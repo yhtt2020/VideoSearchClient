@@ -2,6 +2,7 @@ package video.search;
 
 import video.main.CommonOperation;
 import video.protocol.Engine;
+import video.values.Global;
 import video.values.HanderMessage;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -33,10 +34,12 @@ public class LoginActivity extends Activity {
 				pd.dismiss();
 				switch (msg.what) {
 				case HanderMessage.ERROR:
-					CommonOperation.toast(LoginActivity.this, "µÇÂ½Ê§°Ü¡£");
+					CommonOperation.toast(LoginActivity.this, "µÇÂ½Ê§°Ü¡£ÓÃ»§Ãû»òÃÜÂë´íÎó¡£");
 					break;
 				case HanderMessage.OK:
 					CommonOperation.toast(LoginActivity.this, "µÇÂ½³É¹¦¡£");
+					Intent intent=new Intent(LoginActivity.this,UserCenterActivity.class);
+					startActivity(intent);
 					LoginActivity.this.finish();
 					break;
 				}
@@ -112,6 +115,7 @@ public class LoginActivity extends Activity {
 				}
 				if (!result.endsWith("Error")) {
 					Global.userid = Integer.parseInt(result);
+					Global.userName=userName;
 					handler.sendEmptyMessage(HanderMessage.OK);
 					return;
 				}
