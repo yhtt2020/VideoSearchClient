@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import video.search.PrevVideoActivity;
 import video.search.R;
+import android.R.integer;
+import android.R.string;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,8 +14,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-public class CommonOperation {
+public class CommonOperation { 
 	
 	public static Boolean createPath(String path) {
 	     File file = new File(path);
@@ -30,6 +33,10 @@ public class CommonOperation {
 	     }
 	     return false;
 	 }
+	
+	public static void toast(Context context,CharSequence text,int flag) {
+		Toast.makeText(context, text, flag).show();
+	}
 	
 	public static void showAdvanceDialog(final Context context, final Intent intent){
 		View saveDialog=((Activity) context).getLayoutInflater().inflate(R.layout.searchdetail, null);
