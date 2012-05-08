@@ -22,7 +22,7 @@ public class Engine {
 		}
 	}
 	
-	private SoapObject send(Request r){
+	private SoapObject send(Request r) throws Exception{
 		return (SoapObject) r.GetResult().getProperty(0);
 	}
 	
@@ -45,8 +45,9 @@ public class Engine {
 	 * @param userName 用户名
 	 * @param password 密码
 	 * @return 返回结果，如果为ERROR
+	 * @throws Exception 
 	 */
-	public String Login(String userName, String password){
+	public String Login(String userName, String password) throws Exception{
 		Request r = new Request("Login");
 		r.put("userName", userName);
 		r.put("password", password);
@@ -54,7 +55,7 @@ public class Engine {
 		return getResult(detail,r);
 	}
 	
-	public String Register(String userName, String password, String sex, String email){
+	public String Register(String userName, String password, String sex, String email) throws Exception{
 		Request r = new Request("Register");
 		r.put("userName", userName);
 		r.put("password", password);
