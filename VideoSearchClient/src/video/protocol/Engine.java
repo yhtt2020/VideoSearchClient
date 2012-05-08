@@ -57,7 +57,7 @@ public class Engine {
 	
 	public String Register(String userName, String password, String sex, String email) throws Exception{
 		Request r = new Request("Register");
-		r.put("userName", userName);
+		r.put("username", userName);
 		r.put("password", password);
 		r.put("sex", sex);
 		r.put("email", email);
