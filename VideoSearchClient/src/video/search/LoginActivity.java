@@ -26,6 +26,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.login);
 		listenLoginButton();
 		listenRegisterButton();
+		
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {

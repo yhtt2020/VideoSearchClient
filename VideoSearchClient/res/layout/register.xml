@@ -89,10 +89,10 @@
                 android:text="注册" android:layout_marginRight="10dp"/>
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btnCancel"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="关闭" android:layout_marginRight="20dp"/>
+                android:text="取消" android:layout_marginRight="20dp"/>
 
         </LinearLayout>
 

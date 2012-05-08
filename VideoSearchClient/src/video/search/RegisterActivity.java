@@ -24,6 +24,13 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
 		listenRegisterButton();
+		Button btnCancel=(Button)findViewById(R.id.btnCancel);
+		btnCancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RegisterActivity.this.finish();
+			}
+		});
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
