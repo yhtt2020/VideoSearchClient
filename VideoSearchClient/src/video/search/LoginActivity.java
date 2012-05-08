@@ -62,15 +62,23 @@ public class LoginActivity extends Activity {
 			return v.getText().toString();
 		}
 		
-		private boolean login(String userName, String password){
-			String userIdString = new Engine().Login(userName, password);
-			int userId = Integer.parseInt(userIdString);
-			if(userId == 0){
-				return false;
-			} else {
-				return true;
+		private boolean login(String userName, String password)
+			{
+				String userIdString="0";
+				try {
+					userIdString = new Engine().Login(userName, password);
+				} catch (Exception e) {
+					return false;
+				}
+				int userId = Integer.parseInt(userIdString);
+				if(userId == 0){
+					return false;
+				} else {
+					return true;
+				}
 			}
-		}
+	
+		
 		
 		private void loginSuccess(){
 			toast("µÇÂ¼³É¹¦");
@@ -78,7 +86,7 @@ public class LoginActivity extends Activity {
 		}
 		
 		private void toast(String a){
-			Toast.makeText(LoginActivity.this, a, Toast.LENGTH_LONG);
+			Toast.makeText(LoginActivity.this, a, Toast.LENGTH_SHORT).show();
 		}
 		
 		private void loginFail(){

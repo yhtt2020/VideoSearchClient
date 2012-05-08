@@ -37,7 +37,9 @@ public class CommonOperation {
 	public static void toast(Context context,CharSequence text,int flag) {
 		Toast.makeText(context, text, flag).show();
 	}
-	
+	public static void toast(Context context, CharSequence  text) {
+		Toast.makeText(context, text,Toast.LENGTH_SHORT).show();
+	}
 	public static void showAdvanceDialog(final Context context, final Intent intent){
 		View saveDialog=((Activity) context).getLayoutInflater().inflate(R.layout.searchdetail, null);
 		final Spinner spAlpha= (Spinner)saveDialog.findViewById(R.id.spAlpha);
@@ -78,4 +80,6 @@ public class CommonOperation {
 		return os.toByteArray();
 		//return bitmap
 	}
+
+
 }

@@ -1,5 +1,6 @@
 package video.search;
 
+import video.main.CommonOperation;
 import video.protocol.Engine;
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,17 +13,17 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 	@Override
-	public void onCreate(Bundle savedInstanceState){
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
 		listenRegisterButton();
 	}
-	
-	private void listenRegisterButton(){
-		Button b = (Button)findViewById(R.id.register);
+
+	private void listenRegisterButton() {
+		Button b = (Button) findViewById(R.id.register);
 		b.setOnClickListener(new Register());
 	}
-	
+
 	private class Register implements OnClickListener {
 		@Override
 		public void onClick(View v) {
@@ -30,34 +31,42 @@ public class RegisterActivity extends Activity {
 			String password = getText(R.id.password);
 			String sex = getSex();
 			String email = getText(R.id.email);
-			if(register(userName, password,sex,email)){
-				toast("×¢²á³É¹¦");
+			if (register(userName, password, sex, email)) {
+				CommonOperation.toast(RegisterActivity.this, "¹§Ï²£¬×¢²á³É¹¦£¡");
 				RegisterActivity.this.finish();
 			} else {
-				toast("×¢²áÊ§°Ü");
+				CommonOperation.toast(RegisterActivity.this,"²»ºÃÒâË¼£¬×¢²áÊ§°Ü£¬Çë¼ì²éÍøÂç×´¿ö£¬ÉÔºóÔÙ³¢ÊÔ×¢²á£¡");
 			}
 		}
-		
-		private String getSex(){
-			RadioGroup a = (RadioGroup)findViewById(R.id.sex);
-			if(a.getCheckedRadioButtonId() == R.id.male){
+
+		private String getSex() {
+			RadioGroup a = (RadioGroup) findViewById(R.id.sex);
+			if (a.getCheckedRadioButtonId() == R.id.male) {
 				return "true";
 			} else {
 				return "false";
 			}
 		}
-		
-		private boolean register(String userName, String password, String sex,String email){
-			String r = new Engine().Register(userName, password, sex, email);
-			return Integer.parseInt(r) != 0;
+
+		private boolean register(String userName, String password, String sex,
+				String email) {
+
+			String r = "0";
+			try {
+				r = new Engine().Register(userName, password, sex, email);
+			} catch (Exception e) {
+
+			}
+			if (Integer.parseInt(r) != 0) {
+				Global.userid = Integer.parseInt(r);
+				return true;
+			} else {
+				return false;
+			}
 		}
-		
-		private String getText(int id){
-			return ((TextView)findViewById(id)).getText().toString();
-		}
-		
-		private void toast(String m){
-			Toast.makeText(RegisterActivity.this, m, Toast.LENGTH_LONG);
+
+		private String getText(int id) {
+			return ((TextView) findViewById(id)).getText().toString();
 		}
 	}
 }
