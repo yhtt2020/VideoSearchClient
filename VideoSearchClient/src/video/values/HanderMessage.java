@@ -13,6 +13,7 @@ public final class HanderMessage {
 	public static final int FINISHANY = 0x118;
 	public static final int LOADLAYOUT=0x119;
 	public static final int SHOWRES=0x120;
-	
+	public static final int OK=0x121;
+	public static final int CANCEL=0x122;
 	
 }
