@@ -31,8 +31,6 @@ public class LoginActivity extends Activity {
 			public void handleMessage(Message msg) {
 				pd.dismiss();
 				switch (msg.what) {
-				case HanderMessage.CANCEL:
-					break;
 				case HanderMessage.ERROR:
 					CommonOperation.toast(LoginActivity.this, "µÇÂ½Ê§°Ü¡£");
 					break;
@@ -40,9 +38,7 @@ public class LoginActivity extends Activity {
 					CommonOperation.toast(LoginActivity.this, "µÇÂ½³É¹¦¡£");
 					LoginActivity.this.finish();
 					break;
-
 				}
-
 			}
 		};
 
@@ -63,6 +59,7 @@ public class LoginActivity extends Activity {
 		public void onClick(View arg0) {
 			Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
 			startActivity(i);
+			LoginActivity.this.finish();
 		}
 	}
 
