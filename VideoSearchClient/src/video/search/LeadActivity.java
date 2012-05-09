@@ -72,7 +72,8 @@ public class LeadActivity extends Activity implements OnClickListener {
 		if(Global.userName!="")
 		{
 			TextView tvName=(TextView)findViewById(R.id.tvName);
-			tvName.setText(Global.userName);
+			if(tvName!=null)
+				tvName.setText(Global.userName);
 		}
 		super.onResume();
 	}
