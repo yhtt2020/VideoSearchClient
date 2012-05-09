@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:summary="以下的内容也许能帮到您。" android:title="酷搜">
+    <Preference android:title="概述" android:summary="也许这里的信息能帮到您。"/>
+    
+ <PreferenceCategory android:title="常规" android:summary="酷搜基础帮助。">
+        
+     <Preference android:title="什么是酷搜？" android:summary="酷搜是一款集成多种内容的视频检索系统。由杭州酷搜信息技术有限公司开发并运营。"/>
+    <Preference android:title="允许哪些检索方式？" android:summary="当前版本允许关键字、拍照、录视频、选照片、选视频共五种方式。"/>
+    <Preference android:title="是否收费？" android:summary="酷搜致力于免费提供信息检索服务，酷搜提供的所有服务均不向用户收取任何资费。"/>
+    <Preference android:title="网络流量消耗？" android:summary="酷搜运用成熟的缓存机制，任何图片只需从服务器端载入一次即可，消耗的流量微乎极微。"/>
+    <Preference android:title="为什么要注册？" android:summary="酷搜客户端在未注册登陆，情况下仍可百分之百全功能使用，注册只是为了能让酷搜根据您的兴趣自动为您匹配一些商品而已，如果您觉得麻烦，完全可以不注册不登陆。"/>
+    <Preference android:title="信息安全？" android:summary="酷搜承诺绝不会对第三方提供您的任何信息。"/>
+    <Preference android:title="网站搜索？" android:summary="酷搜提供较为简单的网站检索功能，您可以直接登录我们的网站www.coolsou.com获得检索服务。"/>
+    <Preference android:title="更新？" android:summary="您可以开启更新提示，在开启更新提示的情况下，酷搜会自动检测最新版本的酷搜，并提示更新。"/>
+    
+</PreferenceCategory>
+    
+    <PreferenceCategory android:title="高级" android:summary="也许您需要的不仅仅是搜索服务。">
+        <Preference android:title="我要发布广告" android:summary="酷搜本着严谨的原则接受部分正规企业投放合法广告，详细情况请登录酷搜官网。"/>
+        <Preference android:title="广告费" android:summary="酷搜将会根据您投放的广告性质、时长、版面收费。具体资费标准请访问酷搜官网。"/>
+        <Preference android:title="合作" android:summary="任何拥有自己视频库的公司均可与酷搜合作，理论上均可无缝集成到您的网站或是客户端内。我们将为您提供全方位的视频检索服务。"/>
+        <Preference android:title="开放接口" android:summary="酷搜对外开放WebService接口，有需要的合作伙伴可以在得到酷搜授权的情况下使用这些接口。详情请访问官网。"/>
+    	
+    </PreferenceCategory>
+    
+
+
+</PreferenceScreen>

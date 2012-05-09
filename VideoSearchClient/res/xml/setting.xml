@@ -5,6 +5,7 @@
          <CheckBoxPreference android:title="保存密码" android:summary="自动保存密码。" android:key="savePassword"/>
     <CheckBoxPreference android:title="自动登录" android:summary="每次打开程序就以之前的信息自动登录。" android:key="autoLogin"/>
     <CheckBoxPreference android:title="接受推送" android:summary="允许酷搜定期推送商品信息。" android:key="acceptPush"/>
+    <CheckBoxPreference android:title="自动更新" android:key="autoUpdate" android:summary="允许酷搜搜索可用更新。"/>
     
     </PreferenceCategory>
     

@@ -57,6 +57,7 @@
         
           <uses-library android:name="com.google.android.maps"/>
           <activity android:name="SettingActivity" android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+          <activity android:name="HelpActivity" android:theme="@android:style/Theme.Light" android:label="帮助中心"></activity>
           
     </application>
 
