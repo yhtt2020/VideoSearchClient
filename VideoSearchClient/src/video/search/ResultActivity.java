@@ -20,6 +20,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -85,6 +86,7 @@ public class ResultActivity extends Activity {
 		setContentView(R.layout.result);
 		resultCount = (TextView) findViewById(R.id.tvShower);
 		AdBanner.create(this, (LinearLayout)findViewById(R.id.llAd));
+
 		Intent intent = getIntent();
 		int type = intent.getIntExtra("type", 0);
 
@@ -155,6 +157,7 @@ public class ResultActivity extends Activity {
 			// 显示结果的请求
 			case HanderMessage.SHOWRES:
 				toastSuccess();
+				findViewById(R.id.tvPageNumber).setVisibility(View.INVISIBLE);
 				showResultCount();
 				showResult();
 				break;
@@ -165,6 +168,8 @@ public class ResultActivity extends Activity {
 			{
 				progressDialog.dismiss();
 			}
+			if(hint.isEmpty())
+				return;
 			Toast.makeText(ResultActivity.this,hint , Toast.LENGTH_SHORT).show();
 		}
 	};
