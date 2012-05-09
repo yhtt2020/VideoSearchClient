@@ -42,6 +42,7 @@ import android.view.ViewDebug.FlagToString;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeadActivity extends Activity implements OnClickListener {
@@ -62,8 +63,20 @@ public class LeadActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logo);
 		(new loadMain()).start();
+		
+		
 	}
 	
+	@Override
+	protected void onResume() {
+		if(Global.userName!="")
+		{
+			TextView tvName=(TextView)findViewById(R.id.tvName);
+			tvName.setText(Global.userName);
+		}
+		super.onResume();
+	}
+
 	private void showAd(){
 		View v = findViewById(R.id.llAd);
 		LinearLayout ll = (LinearLayout)v;
@@ -94,6 +107,11 @@ public class LeadActivity extends Activity implements OnClickListener {
 		{
 			Global.userid=preferences.getString(Const.SETTING_USERID, "0");
 			Global.userName=preferences.getString(Const.SETTING_USERNAME, "нч");
+			if(Global.userName!="")
+			{
+				TextView tvName=(TextView)findViewById(R.id.tvName);
+				tvName.setText(Global.userName);
+			}
 		}
 		if(preferences.getBoolean(Const.SETTING_ISFIRSTTIME, true)==true)
 		{

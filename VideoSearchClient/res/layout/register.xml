@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/itemback"
     android:orientation="vertical" >
+
+    <include
+        android:id="@+id/include1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header" />
 
     <TextView
         android:id="@+id/textView1"

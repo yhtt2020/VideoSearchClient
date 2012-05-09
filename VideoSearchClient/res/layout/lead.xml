@@ -116,4 +116,12 @@
         android:layout_height="wrap_content"
         android:background="#f00" android:layout_marginTop="410dip">
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/llchoose"
+        android:textAppearance="?android:attr/textAppearanceMedium" android:layout_alignParentTop="true" android:layout_marginTop="3dp"/>
+
 </RelativeLayout>
