@@ -7,13 +7,14 @@ import android.util.Log;
 
 public class Engine {
 
-	public Good[] SearchByKeyFeatures(String featureCodes,String userPos,String alpha,String sameDegree) {
+	public Good[] SearchByKeyFeatures(String featureCodes,String userPos,String alpha,String sameDegree,String kind) {
 		featureCodes = featureCodes.trim().replace(" ", ",");
 		Request r = new Request("SearchByKeyFeatures");
 		r.put("featureCode",featureCodes);
 		r.put("userPos","00");
 		r.put("str_alpha",alpha);
 		r.put("str_sameDegree", sameDegree);
+		r.put("kind", kind);
 		try {
 			SoapObject soap = send(r);
 			return toGoods(soap);
@@ -26,10 +27,11 @@ public class Engine {
 		return (SoapObject) r.GetResult().getProperty(0);
 	}
 	
-	public Good[] SearchByKeyWords(String keyWords,String userPos){
+	public Good[] SearchByKeyWords(String keyWords,String userPos,String kind){
 		Request r = new Request("SearchByKeyWords");
 		r.put("keyWords",keyWords);
 		r.put("userPos",userPos);
+		r.put("kind", kind);
 		try{
 			SoapObject detail = null;
 			detail=(SoapObject)r.GetResult().getProperty(0);
@@ -85,8 +87,8 @@ public class Engine {
 			geEntity.setPosition(good.getProperty(5).toString());
 			geEntity.setGrade(good.getProperty(6).toString());
 			geEntity.setFullUrl(good.getProperty(7).toString());
-			geEntity.setDescribe(Boolean.getBoolean(good.getProperty(8).toString()));
-			geEntity.setRetire(Boolean.getBoolean(good.getProperty(9).toString()));
+			geEntity.setDescribe((good.getProperty(8).toString()).endsWith("true")?true:false);
+			geEntity.setRetire(good.getProperty(9).toString().endsWith("true")?true:false);
 			geEntity.setExactPosition(good.getProperty(10).toString());
 			goodEntities[index]=geEntity;
 			index++;

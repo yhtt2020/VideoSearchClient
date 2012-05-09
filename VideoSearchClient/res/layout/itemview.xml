@@ -46,26 +46,20 @@
             android:text="549.88"
             android:textColor="#f80" />
 
-        <Button
-            android:id="@+id/btnOrder"
+        <ImageView
+            android:id="@+id/imgRetire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/dy" />
+            android:background="@drawable/retire" />
 
-        <Button
-            android:id="@+id/btnReply"
+        <ImageView
+            android:id="@+id/imgDescrib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/pl" />
+            android:background="@drawable/describe" />
 
-        <Button
-            android:id="@+id/btnLead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/dh" />
     </LinearLayout>
 
     <LinearLayout

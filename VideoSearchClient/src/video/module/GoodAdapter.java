@@ -99,12 +99,26 @@ public class GoodAdapter extends BaseAdapter {
 			loadImageOnLoadingThread(imageView,goods[positon].getFullUrl(),file );
 		}
 		
+		if(!goods[positon].isRetire())
+		{
+			ImageView imgRetire=(ImageView)relativeLayout.findViewById(R.id.imgRetire);
+			imgRetire.setVisibility(View.INVISIBLE);
+		}
+		if(!goods[positon].isDescribe())
+		{
+			ImageView imgDescrib=(ImageView)relativeLayout.findViewById(R.id.imgDescrib);
+			imgDescrib.setVisibility(View.INVISIBLE);
+		}
 		//设置名称文本
 		TextView tvName=(TextView)relativeLayout.findViewById(R.id.tvName);
 		tvName.setText(goods[positon].getName());
 		//设置位置
 		TextView tvPosition=(TextView)relativeLayout.findViewById(R.id.tvPosition);
 		tvPosition.setText(goods[positon].getPosition());
+		
+		
+		
+		
 		//设置价格
 		TextView tvPrice=(TextView)relativeLayout.findViewById(R.id.tvPrice);
 		tvPrice.setText(String.valueOf(goods[positon].getPrice()));

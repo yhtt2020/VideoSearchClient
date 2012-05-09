@@ -28,6 +28,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -62,6 +64,17 @@ public class ResultActivity extends Activity {
 		resultList.setOnScrollListener(new PageEvent(new ShowPageNumber((TextView)findViewById(R.id.tvPageNumber), pageCount), ITEM_COUNT_PER_PAGE));
 		GoodAdapter goodAdapter = new GoodAdapter(ResultActivity.this, content);
 		resultList.setAdapter(goodAdapter);
+		resultList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(content[arg2].getUrl()));
+				startActivity(browserIntent);
+			}
+			
+		});
+
 	}
 	
 	private int calculatePageCount(int itemCount){
@@ -101,7 +114,7 @@ public class ResultActivity extends Activity {
 			// 开始搜索线程
 			if (keyWords != null) {
 				if (keyWords != "") {
-					startSearchByKeyWords(keyWords);
+					startSearchByKeyWords(keyWords,kind);
 					return;
 				}
 			}
@@ -213,7 +226,7 @@ public class ResultActivity extends Activity {
 	}
 
 	// 搜索线程
-	private void startSearchByKeyWords(final String keyWords) {
+	private void startSearchByKeyWords(final String keyWords,final String kind) {
 		// 如果未输入关键字
 		if (keyWords.trim() == "") {
 			Toast.makeText(ResultActivity.this, "关键字不能为空。", Toast.LENGTH_SHORT)
@@ -226,7 +239,7 @@ public class ResultActivity extends Activity {
 			@Override
 			public void run() {
 				new Searcher(mHandler, ResultActivity.this)
-						.SearchByKeyWords(keyWords);
+						.SearchByKeyWords(keyWords,kind);
 				super.run();
 			}
 		};
@@ -241,7 +254,7 @@ public class ResultActivity extends Activity {
 			@Override
 			public void run() {
 				new Searcher(mHandler, ResultActivity.this).SearchByFeature(
-						FeatureCode.calculateImageFeatureCode(BitmapFactory.decodeByteArray(photo, 0, photo.length)),alpha,samedegree);
+						FeatureCode.calculateImageFeatureCode(BitmapFactory.decodeByteArray(photo, 0, photo.length)),alpha,samedegree,kind);
 				super.run();
 			}
 		};
@@ -256,7 +269,7 @@ public class ResultActivity extends Activity {
 				mHandler.sendEmptyMessage(HanderMessage.STARTANY);
 				String feature=FeatureCode.calculateVideoFeatureCode(ResultActivity.this, mHandler, videoUri, cutNum);
 				mHandler.sendEmptyMessage(HanderMessage.FINISHANY);
-				new Searcher(mHandler, ResultActivity.this).SearchByFeature(feature,alpha,samedegree);
+				new Searcher(mHandler, ResultActivity.this).SearchByFeature(feature,alpha,samedegree,kind);
 				super.run();
 			}
 		};

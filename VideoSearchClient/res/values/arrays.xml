@@ -14,10 +14,16 @@
     </string-array>
     <string-array name="kind">
         <item >全部</item>
-        <item >服装首饰</item>
-        <item >电子产品</item>
-        <item >食品饮料</item>
-        <item >图书刊物</item>
+        <item >服装</item>
+        <item >手机</item>
+        <item >宠物</item>
+        <item >玩具</item>
+        <item >笔记本</item>
+        <item >化妆品</item>
+        <item >图书</item>
+        <item >包包</item>
+        <item >鞋子</item>
+        <item >创意礼品</item>
     </string-array>
         <string-array name="samedegree">
         <item >0.0</item>

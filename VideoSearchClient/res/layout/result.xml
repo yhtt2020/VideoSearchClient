@@ -16,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/header" />
-
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +33,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#000055" android:layout_gravity="center_horizontal"/>
 
-"
+"
+
 <LinearLayout
                 android:id="@+id/llAd"
                 android:layout_width="fill_parent"
@@ -42,9 +44,7 @@
                 android:id="@+id/lvResult"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:cacheColorHint="#0000"
-                android:clickable="true"
-                android:scrollbars="vertical" >
+                android:scrollbars="vertical" android:fadingEdgeLength="10dp" android:choiceMode="singleChoice">
             </ListView>
 
 

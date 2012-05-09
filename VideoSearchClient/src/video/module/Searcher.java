@@ -25,12 +25,12 @@ public class Searcher  {
 		shower.ShowResult(goods);
 	}
 
-	public void SearchByKeyWords(String keyWords) 
+	public void SearchByKeyWords(String keyWords,String kind) 
 	{
 		try
 		{
 			Engine engine=new Engine();
-			Good[] goods=engine.SearchByKeyWords(keyWords, "00");
+			Good[] goods=engine.SearchByKeyWords(keyWords, "00",kind);
 		    show(goods);
 		}
 		catch (Exception e) {
@@ -39,10 +39,10 @@ public class Searcher  {
 		}
 	}
 
-	public void SearchByFeature(String features,String alpha,String samedegree) {
+	public void SearchByFeature(String features,String alpha,String samedegree,String kind) {
 		try{
 			Engine engine=new Engine();
-			Good[] goods=engine.SearchByKeyFeatures(features, "", alpha, samedegree);
+			Good[] goods=engine.SearchByKeyFeatures(features, "", alpha, samedegree,kind);
 			show(goods);
 		}
 		catch (Exception e) {
