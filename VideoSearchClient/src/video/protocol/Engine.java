@@ -89,7 +89,13 @@ public class Engine {
 			geEntity.setFullUrl(good.getProperty(7).toString());
 			geEntity.setDescribe((good.getProperty(8).toString()).endsWith("true")?true:false);
 			geEntity.setRetire(good.getProperty(9).toString().endsWith("true")?true:false);
+			if(good.getProperty(10).toString().endsWith("{}"))
+			{
+				geEntity.setExactPosition("");
+			}
+			else{
 			geEntity.setExactPosition(good.getProperty(10).toString());
+			}
 			goodEntities[index]=geEntity;
 			index++;
 		}

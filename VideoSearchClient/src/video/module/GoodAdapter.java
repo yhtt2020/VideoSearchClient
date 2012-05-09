@@ -109,6 +109,11 @@ public class GoodAdapter extends BaseAdapter {
 			ImageView imgDescrib=(ImageView)relativeLayout.findViewById(R.id.imgDescrib);
 			imgDescrib.setVisibility(View.INVISIBLE);
 		}
+		if(goods[positon].getExactPosition().isEmpty())
+		{
+			ImageView imgPoint=(ImageView)relativeLayout.findViewById(R.id.imgPoint);
+			imgPoint.setVisibility(View.INVISIBLE);
+		}
 		//设置名称文本
 		TextView tvName=(TextView)relativeLayout.findViewById(R.id.tvName);
 		tvName.setText(goods[positon].getName());

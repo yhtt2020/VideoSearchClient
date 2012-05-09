@@ -83,4 +83,21 @@
             android:text="上海" />
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/linearLayout2"
+        android:layout_alignTop="@+id/linearLayout4"
+        android:layout_marginRight="38dp"/>
+
+    <ImageView
+        android:id="@+id/imgPoint"
+        android:layout_width="32px"
+        android:layout_height="32px"
+        android:layout_alignBottom="@+id/linearLayout4"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="18dp"
+        android:background="@drawable/dest" />
+
 </RelativeLayout>

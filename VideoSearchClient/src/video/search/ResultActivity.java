@@ -311,6 +311,11 @@ public class ResultActivity extends Activity {
 			startActivity(intent);
 			break;
 		case R.id.menuPosGood:
+			if( gd.getExactPosition().isEmpty())
+			{
+				CommonOperation.toast(this, "该商品无位置信息，暂时无法定位。");
+				break;
+			}
 			Intent mapintent = new Intent(ResultActivity.this,
 					MapPosActivity.class);
 			mapintent.putExtra("pos", gd.getExactPosition());
