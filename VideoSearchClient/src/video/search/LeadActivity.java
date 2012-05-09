@@ -288,6 +288,10 @@ public class LeadActivity extends Activity implements OnClickListener {
 				startActivity(intent);
 			}
 			break;
+		case R.id.menuSetting:
+			intent.setClass(LeadActivity.this, SettingActivity.class);
+			startActivity(intent);
+			break;
 		case R.id.menuHelp:
 			break;
 		case R.id.menuexit:

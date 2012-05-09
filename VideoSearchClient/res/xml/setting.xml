@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:summary="常用的设置" android:title="设置">
+   
+    <PreferenceCategory android:summary="常用设置" android:title="设置">
+         <CheckBoxPreference android:title="保存密码" android:summary="自动保存密码。" android:key="autoSave"/>
+    <CheckBoxPreference android:title="自动登录" android:summary="每次打开程序就以之前的信息自动登录。" android:key="autoLogin"/>
+    <CheckBoxPreference android:title="接受推送" android:summary="允许酷搜定期推送商品信息。" android:key="acceptPush"/>
+    
+    </PreferenceCategory>
+    
+    <PreferenceCategory android:summary="软件相关信息" android:title="关于"><Preference android:title="版权信息" android:summary="杭州酷搜信息技术有限公司版权所有 2012"/><Preference android:title="版本号" android:summary="当前版本号 v1.0" android:key="version" />
+    
+</PreferenceCategory>
+
+</PreferenceScreen>
