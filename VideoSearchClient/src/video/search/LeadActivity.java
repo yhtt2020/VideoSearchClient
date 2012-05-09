@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.Display;
 import android.view.Menu;
@@ -85,10 +86,16 @@ public class LeadActivity extends Activity implements OnClickListener {
 		
 		SharedPreferences preferences;
 		SharedPreferences.Editor editor;
-		preferences=getSharedPreferences("coolsou", MODE_PRIVATE);
+		preferences=PreferenceManager.getDefaultSharedPreferences(this);
+		//preferences=getSharedPreferences("coolsou", MODE_PRIVATE);
 		editor=preferences.edit();
 		//如果是首次运行本程序
-		if(preferences.getBoolean("isFirstTime", true)==true)
+		if(preferences.getBoolean(Const.SETTING_AUTOLOGIN, false)==true)
+		{
+			Global.userid=preferences.getString(Const.SETTING_USERID, "0");
+			Global.userName=preferences.getString(Const.SETTING_USERNAME, "无");
+		}
+		if(preferences.getBoolean(Const.SETTING_ISFIRSTTIME, true)==true)
 		{
 			//只要任何一个目录创建失败就自动退出
 			if(!CommonOperation.createPath(Const.APP_DIR) || !CommonOperation.createPath(Const.APP_DIR_PHOTO) 
@@ -279,7 +286,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.menuUser:
-			if(Global.userid==0)
+			if(Global.userid=="0")
 			{
 				CommonOperation.toast(LeadActivity.this, "您尚未登录，请先登录。");
 			}

@@ -8,6 +8,6 @@ package video.values;
  *
  */
 public class Global {
-	public static int userid=0;
+	public static String userid="0";
 	public static String userName="";
 }

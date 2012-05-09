@@ -2,29 +2,69 @@ package video.search;
 
 import video.main.CommonOperation;
 import video.protocol.Engine;
+import video.values.Const;
 import video.values.Global;
 import video.values.HanderMessage;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends Activity {
 	ProgressDialog pd = null;
 	Handler handler = null;
 	video.search.LoginActivity.LoginListener.LoginThread loginThread = null;
-
+	SharedPreferences sp;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+		CheckBox cbSavePassword=(CheckBox)findViewById(R.id.cbSavePassword);
+		CheckBox cbAutoLogin=(CheckBox)findViewById(R.id.cbAutoLogin);
+		//获取设置
+		sp=PreferenceManager.getDefaultSharedPreferences(this);
+		final Editor edt=sp.edit();
+		//取得属性并赋值
+		cbSavePassword.setChecked(sp.getBoolean("savePassword", false));
+		cbAutoLogin.setChecked(sp.getBoolean("autoLogin", false));
+		if(cbSavePassword.isChecked())
+		{
+			EditText edtUserName=(EditText)findViewById(R.id.userName);
+			EditText edtPassword=(EditText)findViewById(R.id.password);
+			edtUserName.setText(sp.getString(Const.SETTING_USERNAME, ""));
+			edtPassword.setText(sp.getString(Const.SETTING_PASSWORD, ""));
+		}
+		
+		cbSavePassword.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					edt.putBoolean(Const.SETTING_SAVEPASSWORD, isChecked);
+					edt.commit();
+			}
+		});
+		
+		cbAutoLogin.setOnCheckedChangeListener(new OnCheckedChangeListener() {	
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				edt.putBoolean(Const.SETTING_AUTOLOGIN, isChecked);
+				edt.commit();
+			}
+		});
+		
 		listenLoginButton();
 		listenRegisterButton();
 		
@@ -114,8 +154,20 @@ public class LoginActivity extends Activity {
 					handler.sendEmptyMessage(HanderMessage.ERROR);
 				}
 				if (!result.endsWith("Error")) {
-					Global.userid = Integer.parseInt(result);
+					Global.userid = result;
 					Global.userName=userName;
+					Editor edt=sp.edit();
+					if(sp.getBoolean(Const.SETTING_SAVEPASSWORD, false)==true)
+					{
+						edt.putString(Const.SETTING_USERNAME, userName);
+						edt.putString(Const.SETTING_PASSWORD, password);
+						
+					}
+					if(sp.getBoolean(Const.SETTING_AUTOLOGIN, false)==true)
+					{
+						edt.putString(Const.SETTING_USERID, result);
+					}
+					edt.commit();
 					handler.sendEmptyMessage(HanderMessage.OK);
 					return;
 				}

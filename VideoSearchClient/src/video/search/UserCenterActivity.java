@@ -41,7 +41,7 @@ public class UserCenterActivity extends Activity {
 		});
 		PusherEntity=PusherView.createSamples();
 		PusherAdapter pa=new PusherAdapter(UserCenterActivity.this, PusherEntity, 170, 170, 0);
-		glyPusher.setAdapter(pa);
+		//glyPusher.setAdapter(pa);
 	}
 
 	

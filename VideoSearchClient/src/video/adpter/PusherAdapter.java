@@ -34,7 +34,7 @@ public class PusherAdapter extends BaseAdapter {
 	            imgItems[i] = new ImageView(mContext);   
 	            imgItems[i].setLayoutParams(new GridView.LayoutParams(width, height));//设置ImageView宽高   
 	            imgItems[i].setAdjustViewBounds(false);   
-	            //imgItems[i].setScaleType(ImageView.ScaleType.CENTER_CROP);   
+	            imgItems[i].setScaleType(ImageView.ScaleType.CENTER_CROP);   
 	            imgItems[i].setPadding(2, 2, 2, 2);   
 	        }  
 	}
@@ -55,6 +55,7 @@ public class PusherAdapter extends BaseAdapter {
 		return position;
 	}
 
+/*
 	public void SetFocus(int index)    
     {    
         for(int i=0;i<imgItems.length;i++)    
@@ -66,6 +67,8 @@ public class PusherAdapter extends BaseAdapter {
         }    
         imgItems[index].setBackgroundResource(selResId);//设置选中的样式  
     }    
+	*/
+	
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

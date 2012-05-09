@@ -111,7 +111,7 @@ public class RegisterActivity extends Activity {
 				handler.sendEmptyMessage(HanderMessage.ERROR);
 			}
 			if (Integer.parseInt(result) != 0) {
-				Global.userid = Integer.parseInt(result);
+				Global.userid = result;
 				Global.userName=userName;
 				handler.sendEmptyMessage(HanderMessage.OK);
 				return;

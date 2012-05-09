@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:summary="常用的设置" android:title="设置">
    
     <PreferenceCategory android:summary="常用设置" android:title="设置">
-         <CheckBoxPreference android:title="保存密码" android:summary="自动保存密码。" android:key="autoSave"/>
+         <CheckBoxPreference android:title="保存密码" android:summary="自动保存密码。" android:key="savePassword"/>
     <CheckBoxPreference android:title="自动登录" android:summary="每次打开程序就以之前的信息自动登录。" android:key="autoLogin"/>
     <CheckBoxPreference android:title="接受推送" android:summary="允许酷搜定期推送商品信息。" android:key="acceptPush"/>
     
