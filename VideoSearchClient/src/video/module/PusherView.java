@@ -95,6 +95,7 @@ public class PusherView {
 		for(int i=0;i<8;i++)
 		{
 			pEntities[i]=new PusherEntity();
+			pEntities[i].id=i;
 		}
 		pEntities[0].imageURL="http://q.i04.wimg.taobao.com/bao/uploaded/i1/T1hgK0XdhoXXaMLPoU_015311.jpg_b.jpg";
 		pEntities[0].weblink="http://a.m.tmall.com/i9989681564.htm?sid=5dc57e3a9d95e559&spm=41.221635.238071.2";
@@ -112,7 +113,6 @@ public class PusherView {
 		pEntities[6].weblink="http://a.m.tmall.com/i15176436709.htm?sid=5dc57e3a9d95e559";
 		pEntities[7].imageURL="http://q.i04.wimg.taobao.com/bao/uploaded/i8/T1lHeEXcBkXXXYmYPb_122940.jpg_b.jpg";
 		pEntities[7].weblink="http://a.m.tmall.com/i8812238503.htm?ali_refid=a3_420550_1006:1103115805:6::f066b45811380bf000282401f969b234&ali_trackid=1_f066b45811380bf000282401f969b234&sid=5dc57e3a9d95e559";
-		
 		
 		return pEntities;
 	}

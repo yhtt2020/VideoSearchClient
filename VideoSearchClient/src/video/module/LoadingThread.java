@@ -3,7 +3,7 @@ package video.module;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class LoadingThread {
+public class LoadingThread {
 	private static LoadingThread instance;
 	
 	public static void run(Runnable runnable){

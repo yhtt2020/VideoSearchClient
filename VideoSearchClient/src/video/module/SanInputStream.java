@@ -4,7 +4,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-class SanInputStream extends FilterInputStream {
+public class SanInputStream extends FilterInputStream {
     public SanInputStream(InputStream in) {
       super(in);
     }
