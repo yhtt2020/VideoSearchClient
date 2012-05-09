@@ -8,6 +8,7 @@ import org.ksoap2.serialization.SoapObject;
 import video.ad.AdBanner;
 import video.main.CommonOperation;
 import video.values.Const;
+import video.values.Global;
 import video.values.HanderMessage;
 import video.values.SearchType;
 import android.app.Activity;
@@ -267,12 +268,28 @@ public class LeadActivity extends Activity implements OnClickListener {
 	// 菜单功能实现
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		Intent intent =new Intent();
 		switch (item.getItemId()) {
 		case R.id.menuLogin:
-			Intent intent =new Intent(LeadActivity.this,LoginActivity.class);
+			intent.setClass(LeadActivity.this,LoginActivity.class);
 			startActivity(intent);
 			break;
-
+		case R.id.menuRegister:
+			intent.setClass(LeadActivity.this,RegisterActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.menuUser:
+			if(Global.userid==0)
+			{
+				CommonOperation.toast(LeadActivity.this, "您尚未登录，请先登录。");
+			}
+			else {
+				intent.setClass(LeadActivity.this,UserCenterActivity.class);
+				startActivity(intent);
+			}
+			break;
+		case R.id.menuHelp:
+			break;
 		case R.id.menuexit:
 			showExitDialog();
 			break;

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item android:title="登录"
-        android:icon="@drawable/btn1"
         android:id="@+id/menuLogin"></item>
-  	
+     <item android:title="注册"   
+        android:id="@+id/menuRegister"></item>
+  	 <item android:title="用户"
+        android:id="@+id/menuUser"></item>
+   	 <item android:title="设置"
+        android:id="@+id/menuSetting"></item> 	 
+  	  <item android:title="帮助"
+        android:id="@+id/menuHelp"></item>
     <item android:title="退出"
-        android:icon="@drawable/btn2"
         android:id="@+id/menuexit"></item>
   	 
 </menu>
