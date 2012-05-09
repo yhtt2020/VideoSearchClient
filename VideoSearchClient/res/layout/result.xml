@@ -30,7 +30,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#000055" />
+                android:textColor="#000055" android:layout_gravity="center_horizontal"/>
 
 "
 <LinearLayout

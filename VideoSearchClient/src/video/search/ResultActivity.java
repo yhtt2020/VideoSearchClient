@@ -156,7 +156,7 @@ public class ResultActivity extends Activity {
 				return;
 			// 显示结果的请求
 			case HanderMessage.SHOWRES:
-				toastSuccess();
+				hint="搜索完成," + "搜索到相关商品 " + String.valueOf(content.length)+ " 件。";
 				findViewById(R.id.tvPageNumber).setVisibility(View.INVISIBLE);
 				showResultCount();
 				showResult();
@@ -174,13 +174,6 @@ public class ResultActivity extends Activity {
 		}
 	};
 	
-	private void toastSuccess(){
-		toast("搜索完成," + "搜索到相关商品 " + String.valueOf(content.length)+ " 件。");
-	}
-	
-	private void toast(String message){
-		Toast.makeText(ResultActivity.this, message, Toast.LENGTH_SHORT).show();
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
