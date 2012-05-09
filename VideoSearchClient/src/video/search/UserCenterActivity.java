@@ -1,13 +1,16 @@
 package video.search;
 
 import video.adpter.PusherAdapter;
-import video.module.PusherEntity;
 import video.module.PusherView;
 import video.values.Global;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.TextView;
@@ -40,8 +43,18 @@ public class UserCenterActivity extends Activity {
 			}
 		});
 		PusherEntity=PusherView.createSamples();
-		PusherAdapter pa=new PusherAdapter(UserCenterActivity.this, PusherEntity, 170, 170, 0);
-		//glyPusher.setAdapter(pa);
+		PusherAdapter pa=new PusherAdapter(this, PusherEntity, 170, 170, 0);
+		glyPusher.setAdapter(pa);
+		
+		glyPusher.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+					long arg3) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(PusherEntity[position].weblink));
+				startActivity(browserIntent);
+			}
+		});
 	}
 
 	

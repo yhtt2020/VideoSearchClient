@@ -15,7 +15,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 public class PusherAdapter extends BaseAdapter {
@@ -25,6 +24,7 @@ public class PusherAdapter extends BaseAdapter {
 	private PusherEntity[] pusherEntities;
 	
 	public PusherAdapter (Context mContext,PusherEntity[] pusherEntities,int width,int height,int selResId) {
+		super();
 		this.mContext=mContext;
 		this.selResId=selResId;
 		this.pusherEntities=pusherEntities;
@@ -32,10 +32,10 @@ public class PusherAdapter extends BaseAdapter {
 		 for(int i=0;i<pusherEntities.length;i++)  
 	        {  
 	            imgItems[i] = new ImageView(mContext);   
-	            imgItems[i].setLayoutParams(new GridView.LayoutParams(width, height));//设置ImageView宽高   
-	            imgItems[i].setAdjustViewBounds(false);   
+	           // imgItems[i].setLayoutParams(new Gallery.LayoutParams(310, 310));//设置ImageView宽高   
+	            //imgItems[i].setAdjustViewBounds(false);   
 	            imgItems[i].setScaleType(ImageView.ScaleType.CENTER_CROP);   
-	            imgItems[i].setPadding(2, 2, 2, 2);   
+	            imgItems[i].setPadding(10, 10, 10, 10);   	
 	        }  
 	}
 
@@ -73,6 +73,8 @@ public class PusherAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView imageView;   
+
+
         if (convertView == null) {   
             imageView=imgItems[position];  
         } else {   
