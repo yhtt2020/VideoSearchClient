@@ -61,9 +61,9 @@ public class PrevVideoActivity extends Activity implements OnClickListener {
 		case R.id.btnSearch:
 			//放置三参数
 			stopPlayBack();
-			searchIntent.putExtra("alpha", "0.5");
+			searchIntent.putExtra("alpha", "0.2");
 			searchIntent.putExtra("kind", "全部");
-			searchIntent.putExtra("samedegree","0.0");
+			searchIntent.putExtra("samedegree","0.1");
 			startActivity(searchIntent);
 			finish();
 			break;
