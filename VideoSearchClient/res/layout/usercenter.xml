@@ -39,8 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnCancel"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView4"
         android:layout_margin="10dp"
-        android:background="#22222222" android:fadingEdge="horizontal" android:fadingEdgeLength="5dp" android:spacing="10dp"/>
+        android:background="#22222222"
+        android:fadingEdge="horizontal"
+        android:fadingEdgeLength="5dp"
+        android:spacing="10dp" />
 
     <TextView
         android:id="@+id/tvWelcome"

@@ -39,7 +39,7 @@ public class ResultActivity extends Activity {
 	private TextView resultCount;
 	private final int REQUEST_MapPos = 1212;
 
-	private static final String VIDEO_URL = "http://192.168.40.1/Videos/";
+	private static final String VIDEO_URL = "http://www.coolsou.com/Videos/3gp/";
 	private static final int NOPROGRESSS_DIALOG = 0;
 	private static final int PROGRESS_DIALOG = 1;
 	private static final int ITEM_COUNT_PER_PAGE = 10;

@@ -1,10 +1,6 @@
 package video.search;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-import org.ksoap2.serialization.SoapObject;
-
 import video.ad.AdBanner;
 import video.main.CommonOperation;
 import video.values.Const;
@@ -17,7 +13,6 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.AlertDialog.Builder;
-import android.app.Application;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,7 +22,6 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -38,7 +32,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewDebug.FlagToString;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -337,6 +330,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						LeadActivity.this.finish();
+						System.exit(0);
 					}
 				});
 		builder.setNegativeButton("È¡Ïû", null);

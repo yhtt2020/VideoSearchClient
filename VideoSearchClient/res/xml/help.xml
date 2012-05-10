@@ -12,6 +12,7 @@
     <Preference android:title="信息安全？" android:summary="酷搜承诺绝不会对第三方提供您的任何信息。"/>
     <Preference android:title="网站搜索？" android:summary="酷搜提供较为简单的网站检索功能，您可以直接登录我们的网站www.coolsou.com获得检索服务。"/>
     <Preference android:title="更新？" android:summary="您可以开启更新提示，在开启更新提示的情况下，酷搜会自动检测最新版本的酷搜，并提示更新。"/>
+    <Preference android:title="为什么搜索这么慢？" android:summary="影响搜索速度的因素有很多，其中包括手机的网络状况，服务器的网络状况等。在排除其他硬件的情况下，酷搜检索系统速度是非常快的。"/>
     
 </PreferenceCategory>
     
