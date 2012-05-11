@@ -2,7 +2,6 @@ package video.search;
 
 import java.io.File;
 
-import video.ad.AdBanner;
 import video.main.*;
 import video.module.GoodAdapter;
 import video.module.Searcher;
@@ -93,8 +92,9 @@ public class ResultActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.result);
-		resultCount = (TextView) findViewById(R.id.tvShower);
-		AdBanner.create(this, (LinearLayout)findViewById(R.id.llAd));
+		LinearLayout llresultCount=(LinearLayout)findViewById(R.id.lltop);
+		resultCount = (TextView) llresultCount.findViewById(R.id.tvShower);
+		//AdBanner.create(this, (LinearLayout)findViewById(R.id.llAd));
 
 		Intent intent = getIntent();
 		int type = intent.getIntExtra("type", 0);
