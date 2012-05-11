@@ -49,12 +49,12 @@
         android:layout_below="@id/in_topbar"
         android:gravity="center_vertical" >
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView1"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:src="@drawable/loading" />
+            android:src="@drawable/loading" android:background="#00000000"/>
 
         <TextView
             android:id="@+id/tvShower"
