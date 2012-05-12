@@ -432,9 +432,9 @@ public class ResultActivity extends Activity {
 	protected Dialog onCreateDialog(int id, Bundle args) {
 		// 初始化进度条
 		progressDialog = new ProgressDialog(this);
-		progressDialog.setTitle("酷搜提示");
+/*		progressDialog.setTitle("酷搜提示");*/
 		progressDialog.setMessage("亲，请稍等，马上就好……");
-		progressDialog.setCancelable(true);
+/*	progressDialog.setCancelable(true);*/
 		switch (id) {
 		case NOPROGRESSS_DIALOG:
 			progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -445,7 +445,7 @@ public class ResultActivity extends Activity {
 			break;
 		}
 		progressDialog.setIndeterminate(false);
-		progressDialog.setButton("取消", new DialogInterface.OnClickListener() {
+/*		progressDialog.setButton("取消", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if (searchThread != null) {
@@ -454,7 +454,7 @@ public class ResultActivity extends Activity {
 				}
 				ResultActivity.this.finish();
 			}
-		});
+		});*/
 		return progressDialog;
 	}
 
