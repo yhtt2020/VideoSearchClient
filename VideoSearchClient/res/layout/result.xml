@@ -28,7 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/header" />
-
+
+
+
     <ListView
         android:id="@+id/lvResult"
         android:layout_width="match_parent"
@@ -38,7 +40,7 @@
         android:choiceMode="singleChoice"
         android:fadeScrollbars="false"
         android:fadingEdgeLength="0dp"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical" android:visibility="invisible">
 
     </ListView>
 
@@ -84,5 +86,15 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ad1" />
     </LinearLayout>
+
+    <Gallery
+        android:id="@+id/glyResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/lvResult"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/lvResult"
+        android:layout_weight="1" android:spacing="10dp"/>
 
 </RelativeLayout>

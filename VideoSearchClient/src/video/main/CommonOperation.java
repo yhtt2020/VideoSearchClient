@@ -2,6 +2,11 @@ package video.main;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+import video.module.LoadingThread;
+import video.module.SanInputStream;
 import video.search.PrevVideoActivity;
 import video.search.R;
 import android.R.integer;
@@ -12,7 +17,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -81,5 +89,21 @@ public class CommonOperation {
 		//return bitmap
 	}
 
-
+	public static void loadImageOnLoadingThread(final ImageView view, final String url,final File file){
+		LoadingThread.run(new Runnable(){
+			@Override
+			public void run() {
+				try{
+					InputStream in = new java.net.URL(url).openStream();
+					Bitmap image = BitmapFactory.decodeStream(new SanInputStream(in));
+					FileOutputStream outputStream=new FileOutputStream(file);
+					image.compress(CompressFormat.JPEG, 100, outputStream);
+					outputStream.close();
+					((ImageView)view).setImageBitmap(image);
+					view.postInvalidate();
+				}
+				catch(Exception e){
+				}
+			}});
+	}
 }

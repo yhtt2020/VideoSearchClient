@@ -2,18 +2,22 @@ package video.search;
 
 import java.io.File;
 
+import video.adpter.ItemAdapter;
 import video.main.*;
 import video.module.GoodAdapter;
 import video.module.Searcher;
 import video.protocol.Good;
+import video.search.R.layout;
 import video.search.page.PageEvent;
 import video.search.page.ShowPageNumber;
 import video.values.Const;
 import video.values.HanderMessage;
 import video.values.SearchType;
+import android.R.integer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -21,16 +25,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Gallery;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +55,9 @@ public class ResultActivity extends Activity {
 	private static final int NOPROGRESSS_DIALOG = 0;
 	private static final int PROGRESS_DIALOG = 1;
 	private static final int ITEM_COUNT_PER_PAGE = 10;
-
+	private static ListView lvResult=null;
+	private static Gallery glyResult=null;
+	
 	private Thread searchThread = null;
 	public static int position = 0;
 	// 显示进度条对话框
@@ -53,47 +68,15 @@ public class ResultActivity extends Activity {
 	private int pageCount;
 	static String featureString = "";
 	
-	public void setContent(Good[] a){
-		this.content = a;
-	}
-	
-	private void showResult() {
-		pageCount = calculatePageCount(content.length);
-		ListView resultList = (ListView) findViewById(R.id.lvResult);
-		resultList.setOnScrollListener(new PageEvent(new ShowPageNumber((TextView)findViewById(R.id.tvPageNumber), pageCount), ITEM_COUNT_PER_PAGE));
-		GoodAdapter goodAdapter = new GoodAdapter(ResultActivity.this, content);
-		resultList.setAdapter(goodAdapter);
-		resultList.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(content[arg2].getUrl()));
-				startActivity(browserIntent);
-			}
-			
-		});
-
-	}
-	
-	private int calculatePageCount(int itemCount){
-		if(itemCount % ITEM_COUNT_PER_PAGE == 0){
-			return itemCount / ITEM_COUNT_PER_PAGE;
-		} else {
-			return itemCount / ITEM_COUNT_PER_PAGE + 1;
-		}
-	}
-	
-	private void showResultCount(){
-		resultCount.setText("搜索到相关商品 " + String.valueOf(content.length)+ " 件");
-	}
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.result);
 		LinearLayout llresultCount=(LinearLayout)findViewById(R.id.lltop);
 		resultCount = (TextView) llresultCount.findViewById(R.id.tvShower);
+		lvResult = (ListView) findViewById(R.id.lvResult);
+		glyResult=(Gallery)findViewById(R.id.glyResult);
+		
 		//AdBanner.create(this, (LinearLayout)findViewById(R.id.llAd));
 
 		Intent intent = getIntent();
@@ -128,8 +111,122 @@ public class ResultActivity extends Activity {
 			startSearchByVideo((Uri)intent.getParcelableExtra("videofile"),cutNum,alpha,samedegree,kind);
 			break;
 		}
+	}
+	
+	
+	public void setContent(Good[] a){
+		this.content = a;
+	}
+	
+	private void showResult() {
+		pageCount = calculatePageCount(content.length);
+		
+		lvResult.setOnScrollListener(new PageEvent(new ShowPageNumber((TextView)findViewById(R.id.tvPageNumber), pageCount), ITEM_COUNT_PER_PAGE));
+		GoodAdapter goodAdapter = new GoodAdapter(ResultActivity.this, content,R.layout.itemview);
+		lvResult.setAdapter(goodAdapter);
+
+		ItemAdapter itemAdapter = new ItemAdapter(ResultActivity.this, content, 310, 310, 0);
+
+		glyResult=(Gallery)findViewById(R.id.glyResult);
+		glyResult.setAdapter(itemAdapter);
+		glyResult.setOnItemClickListener(new itemClicListener());
+		
+		
+//		relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+			
+//			@Override
+//			public boolean onLongClick(View v) {
+//				int i= (Integer) v.getTag();
+//				Log.e("错误", String.valueOf(i));
+//				ResultActivity.position= (Integer) v.getTag();
+//				return false;
+//			}
+//		});
+		
+		lvResult.setOnItemClickListener(new itemClicListener());
 
 	}
+
+	class itemClicListener implements OnItemClickListener
+	{
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			//Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(content[arg2].getUrl()));
+			//startActivity(browserIntent);
+			View root= ResultActivity.this.getLayoutInflater().inflate(R.layout.glyitemview, null);
+			final PopupWindow popup=new PopupWindow(root,LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+			initeItemView(content[arg2],root);
+		//	popup.showAtLocation( root, Gravity.CENTER, (getWindowManager().getDefaultDisplay().getWidth()-300)/2,  (getWindowManager().getDefaultDisplay().getHeight()-400)/2);
+			popup.setAnimationStyle(android.R.style.Animation_Translucent);
+			
+			popup.showAtLocation( root, Gravity.CENTER, 0, 0);
+
+			
+			root.findViewById(R.id.btnCancel).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					popup.dismiss();
+					
+				}
+			});
+		}
+	}
+	private void initeItemView(Good good,View root)
+	{
+		
+		ImageView imageView=(ImageView)root.findViewById(R.id.imgItemPic);
+		String filePath=Const.APP_DIR_TEMP+String.valueOf(good.getId())+".jpg";
+		File file=new File(filePath);
+		if( (file.exists()) )
+		{
+			imageView.setImageBitmap(BitmapFactory.decodeFile(filePath));
+		}
+		else {
+			CommonOperation.loadImageOnLoadingThread(imageView,good.getFullUrl(),file );
+		}
+		
+		if(!good.isRetire())
+		{
+			ImageView imgRetire=(ImageView)root.findViewById(R.id.imgRetire);
+			imgRetire.setVisibility(View.INVISIBLE);
+		}
+		if(!good.isDescribe())
+		{
+			ImageView imgDescrib=(ImageView)root.findViewById(R.id.imgDescrib);
+			imgDescrib.setVisibility(View.INVISIBLE);
+		}
+		if(good.getExactPosition().isEmpty())
+		{
+			ImageView imgPoint=(ImageView)root.findViewById(R.id.imgPoint);
+			imgPoint.setVisibility(View.INVISIBLE);
+		}
+		//设置名称文本
+		TextView tvName=(TextView)root.findViewById(R.id.tvName);
+		tvName.setText(good.getName());
+		//设置位置
+		TextView tvPosition=(TextView)root.findViewById(R.id.tvPosition);
+		tvPosition.setText(good.getPosition());
+		
+		//设置价格
+		TextView tvPrice=(TextView)root.findViewById(R.id.tvPrice);
+		tvPrice.setText(String.valueOf(good.getPrice()));
+	}
+	
+	
+	private int calculatePageCount(int itemCount){
+		if(itemCount % ITEM_COUNT_PER_PAGE == 0){
+			return itemCount / ITEM_COUNT_PER_PAGE;
+		} else {
+			return itemCount / ITEM_COUNT_PER_PAGE + 1;
+		}
+	}
+	
+	private void showResultCount(){
+		resultCount.setText("搜索到相关商品 " + String.valueOf(content.length)+ " 件");
+	}
+	
+	
 
 	// 获取消息的句柄
 	private Handler mHandler = new Handler() {
@@ -279,7 +376,7 @@ public class ResultActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = new MenuInflater(this);
-		inflater.inflate(R.menu.searchmenu, menu);
+		inflater.inflate(R.menu.resultmenu, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 

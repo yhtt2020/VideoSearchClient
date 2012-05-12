@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" android:clickable="true" android:background="@drawable/recbg" android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imgItemPic"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/loading" android:scaleType="fitCenter"/>
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dip"
+        android:layout_below="@id/imgItemPic"
+        android:gravity="center_vertical"
+        android:text="西部数据/元素/500G/2.5寸移动硬盘 WD/西数 USB3.0接口 三年换新"
+        android:textColor="#222222" />
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tvName">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/jg" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="549.88"
+            android:textColor="#f80" android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/imgRetire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/retire" />
+
+        <ImageView
+            android:id="@+id/imgDescrib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/describe" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/jl" android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/tvPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="上海" android:textColor="#222222"/>
+
+        <ImageView
+            android:id="@+id/imgPoint"
+            android:layout_width="32px"
+            android:layout_height="32px"
+            android:background="@drawable/dest" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnCancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cancel" android:background="@drawable/recbg"/>
+
+</RelativeLayout>

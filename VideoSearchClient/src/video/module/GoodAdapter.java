@@ -7,10 +7,12 @@ import java.io.OutputStream;
 
 import javax.xml.transform.Templates;
 
+import video.main.CommonOperation;
 import video.protocol.Good;
 import video.search.R;
 import video.search.ResultActivity;
 import video.values.Const;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -29,6 +31,7 @@ public class GoodAdapter extends BaseAdapter {
 	private Good[] goods=null;
 	private Context context;
 	private int positon=0;
+	private int layout=0;
 	//属性
 	public int getPositon() {
 		return positon;
@@ -37,10 +40,11 @@ public class GoodAdapter extends BaseAdapter {
 		this.positon = positon;
 	}
 	
-	public GoodAdapter(Context context,Good[] goods)
+	public GoodAdapter(Context context,Good[] goods, int glyitemview)
 	{
 		this.context=context;
 		this.goods=goods;
+		this.layout=glyitemview;
 	}
 	public void removeAll()
 	{
@@ -81,12 +85,11 @@ public class GoodAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int positon, View convertView, ViewGroup parent) {
-		
 		String inflaterString=Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater layoutInflater=(LayoutInflater)context.getSystemService(inflaterString);
 		//得到Item的线性布局
 		RelativeLayout relativeLayout=null;
-		relativeLayout=(RelativeLayout)layoutInflater.inflate(R.layout.itemview, null);
+		relativeLayout=(RelativeLayout)layoutInflater.inflate(this.layout, null);
 		//设置图片
 		ImageView imageView=(ImageView)relativeLayout.findViewById(R.id.imgItemPic);
 		String filePath=Const.APP_DIR_TEMP+String.valueOf(goods[positon].getId())+".jpg";
@@ -96,7 +99,7 @@ public class GoodAdapter extends BaseAdapter {
 			imageView.setImageBitmap(BitmapFactory.decodeFile(filePath));
 		}
 		else {
-			loadImageOnLoadingThread(imageView,goods[positon].getFullUrl(),file );
+			CommonOperation.loadImageOnLoadingThread(imageView,goods[positon].getFullUrl(),file );
 		}
 		
 		if(!goods[positon].isRetire())
@@ -121,42 +124,15 @@ public class GoodAdapter extends BaseAdapter {
 		TextView tvPosition=(TextView)relativeLayout.findViewById(R.id.tvPosition);
 		tvPosition.setText(goods[positon].getPosition());
 		
-		
-		
-		
 		//设置价格
 		TextView tvPrice=(TextView)relativeLayout.findViewById(R.id.tvPrice);
 		tvPrice.setText(String.valueOf(goods[positon].getPrice()));
 		((Activity)context).registerForContextMenu(relativeLayout);
 		relativeLayout.setLongClickable(true);
 		relativeLayout.setTag(positon);
-		relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-		
-			@Override
-			public boolean onLongClick(View v) {
-				int i= (Integer) v.getTag();
-				Log.e("错误", String.valueOf(i));
-				ResultActivity.position= (Integer) v.getTag();
-				return false;
-			}
-		});
+
 		return relativeLayout;
 	}
-	private static void loadImageOnLoadingThread(final ImageView view, final String url,final File file){
-		LoadingThread.run(new Runnable(){
-			@Override
-			public void run() {
-				try{
-					InputStream in = new java.net.URL(url).openStream();
-					Bitmap image = BitmapFactory.decodeStream(new SanInputStream(in));
-					FileOutputStream outputStream=new FileOutputStream(file);
-					image.compress(CompressFormat.JPEG, 100, outputStream);
-					outputStream.close();
-					((ImageView)view).setImageBitmap(image);
-					view.postInvalidate();
-				}
-				catch(Exception e){
-				}
-			}});
-	}
+	
+	
 }

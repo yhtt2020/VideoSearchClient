@@ -4,4 +4,14 @@
         <item name="android:textColor">#3F48CC</item>
     </style>
     
+   <style name="mypopwindow_anim_style">
+
+  <item name="android:windowEnterAnimation">@anim/ani_out</item>        <!-- 指定显示的动画xml  -->
+   <item name="android:windowExitAnimation">@anim/ani_out</item>       <!-- 指定消失的动画xml  -->
+
+ </style>
+
+    
+    
+    
 </resources>
