@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" android:background="@drawable/recmenu" android:padding="10dp">
+
+    <Button
+        android:id="@+id/btnDetail"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/recmenu"
+        android:text="商品详情" android:textColor="#FF0000"/>
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/btnDetail"
+        android:layout_alignBottom="@+id/btnDetail"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/btnDetail"
+        android:background="@drawable/recmenu"
+        android:text="播放视频"
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/btnAgain"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/btnPlay"
+        android:layout_below="@+id/btnPlay"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/recmenu"
+        android:text="划图再搜"
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/btnLead"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/btnAgain"
+        android:layout_alignBottom="@+id/btnAgain"
+        android:layout_alignLeft="@+id/btnDetail"
+        android:background="@drawable/recmenu"
+        android:text="商品定位"
+        android:textColor="#FF0000" />
+
+</RelativeLayout>
