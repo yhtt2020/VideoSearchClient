@@ -33,7 +33,6 @@ public class PrevVideoActivity extends Activity implements OnClickListener {
 		videoView.setVideoURI(videoFileUri);
 		mediaController=new MediaController(this);
 		videoView.setMediaController(mediaController);
-		btnSearch=(Button)findViewById(R.id.btnSearch);
 		btnCancel=(Button)findViewById(R.id.btnCancel);
 		btnAdvance=(Button)findViewById(R.id.btnAdvance);
 		btnSearch.setOnClickListener(this);
@@ -57,15 +56,6 @@ public class PrevVideoActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btnAdvance:
 			CommonOperation.showAdvanceDialog(PrevVideoActivity.this,searchIntent);
-			break;
-		case R.id.btnSearch:
-			//放置三参数
-			stopPlayBack();
-			searchIntent.putExtra("alpha", "0.2");
-			searchIntent.putExtra("kind", "全部");
-			searchIntent.putExtra("samedegree","0.1");
-			startActivity(searchIntent);
-			finish();
 			break;
 		default:
 			break;

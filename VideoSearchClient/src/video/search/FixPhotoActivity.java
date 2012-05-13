@@ -63,7 +63,6 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		btnTurnRight=(Button)findViewById(R.id.btnTurnRight);
 		btnSave=(Button)findViewById(R.id.btnSave);
 		btnCancel=(Button)findViewById(R.id.btnCancel);
-		btnSearch=(Button)findViewById(R.id.btnSearch);
 		btnAdvance=(Button)findViewById(R.id.btnAdvance);
 		//设置事件
 		btnSelectAll.setOnClickListener(this);
@@ -99,14 +98,6 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btnSave:
 			showSaveDialog();
-			break;
-		case R.id.btnSearch:
-			//放置三参数
-			searchIntent.putExtra("alpha", "0.2");
-			searchIntent.putExtra("kind", "全部");
-			searchIntent.putExtra("samedegree","0.1");
-			startActivity(searchIntent);
-			finish();
 			break;
 		case R.id.btnAdvance:
 			CommonOperation.showAdvanceDialog(FixPhotoActivity.this,searchIntent);		
