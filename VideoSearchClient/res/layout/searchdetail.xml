@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FFFFFF" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/recmenu"
+    android:padding="10dp" >
 
     <TextView
         android:id="@+id/textView2"
+        style="@style/styTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:text="高级搜索"
-        android:textAppearance="?android:attr/textAppearanceLarge" style="@style/styTextView" android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="搜索向导"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView2" >
+        android:layout_below="@id/imgPreview"
+        android:layout_marginTop="5dp" >
 
         <TextView
             android:id="@+id/textView1"
+            style="@style/styTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="14dp"
             android:layout_weight="0.1"
             android:text="严格度："
-            android:textAppearance="?android:attr/textAppearanceMedium" style="@style/styTextView"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/spAlpha"
@@ -36,7 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="20dp"
-            android:entries="@array/spserious" />
+            android:background="@drawable/recmenu"
+            android:entries="@array/spserious"
+            android:padding="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,22 +52,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1" >
+        android:layout_below="@+id/linearLayout1"
+        android:gravity="center_vertical" >
 
         <TextView
             android:id="@+id/textView3"
+            style="@style/styTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:layout_weight="0.1"
             android:text="相似度要求："
-            android:textAppearance="?android:attr/textAppearanceMedium" style="@style/styTextView"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/spSameDegree"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp" android:entries="@array/samedegree"/>
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/recmenu"
+            android:entries="@array/samedegree"
+            android:padding="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,28 +87,47 @@
 
         <TextView
             android:id="@+id/textView4"
+            style="@style/styTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:layout_weight="0.1"
             android:text="商品种类："
-            android:textAppearance="?android:attr/textAppearanceMedium" style="@style/styTextView"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/spKind"
             android:layout_width="140dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp" android:entries="@array/kind"/>
+            android:layout_marginRight="20dp"
+            android:background="@drawable/recmenu"
+            android:entries="@array/kind"
+            android:padding="10dp" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/linearLayout3"
+        android:layout_below="@+id/linearLayout3"
+        android:background="@drawable/recmenubtn"
+        android:text="搜索" android:layout_margin="20dp"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/btnSearch"
+        android:layout_alignBottom="@+id/btnSearch"
+        android:layout_alignRight="@+id/linearLayout3"
+        android:background="@drawable/recmenubtn"
+        android:text="取消" android:layout_margin="20dp"/>
+
+    <ImageView
+        android:id="@+id/imgPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" >
-    </LinearLayout>
+        android:src="@drawable/loading" android:layout_below="@id/textView2" android:layout_centerHorizontal="true" android:background="@drawable/recmenu"/>
 
 </RelativeLayout>

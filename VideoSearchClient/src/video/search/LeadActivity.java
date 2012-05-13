@@ -111,7 +111,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 		{
 			//只要任何一个目录创建失败就自动退出
 			if(!CommonOperation.createPath(Const.APP_DIR) || !CommonOperation.createPath(Const.APP_DIR_PHOTO) 
-				|| !CommonOperation.createPath(Const.APP_DIR_TEMP)	) 
+				|| !CommonOperation.createPath(Const.APP_DIR_TEMP)) 
 			{
 				Toast.makeText(this, "非常抱歉，创建程序所需目录失败，请检查程序是否具有权限，程序将自动退出。", Toast.LENGTH_LONG).show();
 				this.finish();
@@ -178,6 +178,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 		 }
 		switch (requestCode) {
 		case RECODE_TAKEPHOTO:
+			
 			startPhotoFixer(analyseData(data));
 			break;
 		case RECODE_CHOOSEPHOTO:

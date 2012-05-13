@@ -37,7 +37,6 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 	private Button btnTurnRight=null;
 	private Button btnSave=null;
 	private Button btnCancel=null;
-	private Button btnSearch=null;
 	private Button btnAdvance=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +69,6 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		btnTurnRight.setOnClickListener(this);
 		btnSave.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
-		btnSearch.setOnClickListener(this);
 		btnAdvance.setOnClickListener(this);
 		
 	}

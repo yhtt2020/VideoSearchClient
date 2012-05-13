@@ -7,8 +7,13 @@ import java.io.InputStream;
 
 import video.module.LoadingThread;
 import video.module.SanInputStream;
+import video.search.FixPhotoActivity;
+import video.search.MapPosActivity;
 import video.search.PrevVideoActivity;
 import video.search.R;
+import video.search.ResultActivity;
+import video.search.VideoPlayerActivity;
+import video.values.Const;
 import android.R.integer;
 import android.R.string;
 import android.app.Activity;
@@ -19,8 +24,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.net.Uri;
+import android.opengl.Visibility;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -48,15 +62,114 @@ public class CommonOperation {
 	public static void toast(Context context, CharSequence  text) {
 		Toast.makeText(context, text,Toast.LENGTH_SHORT).show();
 	}
-	public static void showAdvanceDialog(final Context context, final Intent intent){
-		View saveDialog=((Activity) context).getLayoutInflater().inflate(R.layout.searchdetail, null);
-		final Spinner spAlpha= (Spinner)saveDialog.findViewById(R.id.spAlpha);
-		final Spinner spSameDegree=(Spinner)saveDialog.findViewById(R.id.spSameDegree);
-		final Spinner spKind=(Spinner)saveDialog.findViewById(R.id.spKind);
-		new AlertDialog.Builder(context).setView(saveDialog).setPositiveButton("搜索", new DialogInterface.OnClickListener() {
+	
+	/*
+	 View root = ResultActivity.this.getLayoutInflater().inflate(
+				R.layout.itemmenu, null);
+	   popContextMenu = new PopupWindow(root,
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		Button btnDetail = (Button) root.findViewById(R.id.btnDetail);
+		Button btnPlay = (Button) root.findViewById(R.id.btnPlay);
+		Button btnLead = (Button) root.findViewById(R.id.btnLead);
+		Button btnAgain = (Button) root.findViewById(R.id.btnAgain);
+		class ContextMenuOnClickListener implements OnClickListener {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.btnPlay:
+					Intent intent = new Intent(ResultActivity.this,
+							VideoPlayerActivity.class);
+					intent.putExtra("name", good.getName());
+					intent.putExtra("url",
+							ResultActivity.VIDEO_URL + good.getId() + ".3gp");
+					startActivity(intent);
+					break;
+				case R.id.btnLead:
+					if (good.getExactPosition().isEmpty()) {
+						CommonOperation.toast(ResultActivity.this,
+								"该商品无位置信息，暂时无法定位。");
+						break;
+					}
+					Intent mapintent = new Intent(ResultActivity.this,
+							MapPosActivity.class);
+					mapintent.putExtra("pos", good.getExactPosition());
+					startActivityForResult(mapintent, REQUEST_MapPos);
+					break;
+				case R.id.btnDetail:
+					Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+							Uri.parse(good.getUrl()));
+					startActivity(browserIntent);
+					break;
+				case R.id.btnAgain:
+					File file = new File(Const.APP_DIR_TEMP
+							+ String.valueOf(good.getId()) + ".jpg");
+					if (file.exists()) {
+						Intent intent2 = new Intent(ResultActivity.this,
+								FixPhotoActivity.class);
+						// intent.putExtra("bitmap", photo);
+						intent2.putExtra("bitmap", CommonOperation
+								.bitmapToBytes(BitmapFactory
+										.decodeFile(Const.APP_DIR_TEMP
+												+ String.valueOf(good.getId())
+												+ ".jpg")));
+						startActivity(intent2);
+						finish();
+					} else {
+						{
+							Toast.makeText(ResultActivity.this,
+									"该商品暂无缩略图，无法搜索。", Toast.LENGTH_LONG).show();
+						}
+					}
+				default:
+					break;
+				}
+			}
+		}
+		btnDetail.setOnClickListener(new ContextMenuOnClickListener());
+		btnLead.setOnClickListener(new ContextMenuOnClickListener());
+		btnPlay.setOnClickListener(new ContextMenuOnClickListener());
+		btnAgain.setOnClickListener(new ContextMenuOnClickListener());
+		popContextMenu.setAnimationStyle(android.R.style.Animation_Translucent);
+		popContextMenu.showAtLocation(root, Gravity.BOTTOM, 0, -400);
+		popContextMenu.setOutsideTouchable(true);
+		popContextMenu.setFocusable(false);
+		popContextMenu.setTouchInterceptor(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+					if(event.getAction()==MotionEvent.ACTION_OUTSIDE)
+					{
+						popContextMenu.dismiss();
+						popContextMenu=null;
+						return true;
+					}
+				return false;
+			}
+		});
+	}
+	  */
+	public static PopupWindow initPopWindow(Context context,View root)
+	{
+		PopupWindow popupWindow=null;
+		popupWindow = new PopupWindow(root,
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		popupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
+		return popupWindow;
+	}
+	
+	public static void showAdvanceDialog(final Context context, final Intent intent){
+		View root=((Activity) context).getLayoutInflater().inflate(R.layout.searchdetail, null);
+		
+		final PopupWindow popupWindow=initPopWindow(context,root);
+		final Spinner spAlpha= (Spinner)root.findViewById(R.id.spAlpha);
+		final Spinner spSameDegree=(Spinner)root.findViewById(R.id.spSameDegree);
+		final Spinner spKind=(Spinner)root.findViewById(R.id.spKind);
+		Button btnSearch=(Button)root.findViewById(R.id.btnSearch);
+		Button btnCancel=(Button)root.findViewById(R.id.btnCancel);
+		final ImageView imgPreview= (ImageView) root.findViewById(R.id.imgPreview);
+				
+		btnSearch.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				String alpha=spAlpha.getSelectedItem().toString();
 				String kind=spKind.getSelectedItem().toString();
 				String sameDegree=spSameDegree.getSelectedItem().toString();
@@ -69,13 +182,22 @@ public class CommonOperation {
 				if(context.getClass()==PrevVideoActivity.class)
 				{
 					((PrevVideoActivity)context).stopPlayBack();
+					imgPreview.setVisibility(View.GONE);
+				}
+				else {
+					//imgPreview.setImageBitmap(intent.getByteArrayExtra(name))
 				}
 				((Activity) context).finish();
-				
-
 			}
-		}).setNegativeButton("取消", null).show();
-		
+		});
+		btnCancel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				popupWindow.dismiss();
+			}
+		});
+		popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
 	}
 	
 	public static byte[] bitmapToBytes(Bitmap bitmap) {
