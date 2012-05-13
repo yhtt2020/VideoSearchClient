@@ -1,6 +1,5 @@
 package video.view;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -35,10 +34,9 @@ public class PhotoFixer extends ImageView {
 		//rotate(90);
 		//设置画笔风格
 		paint=new Paint(Paint.DITHER_FLAG);
-		paint.setColor(Color.BLUE);
+		paint.setColor(Color.rgb( 22,22, 22));
 		paint.setStyle(Paint.Style.STROKE);
 		Path p= new Path();
-		p.addRect(0, 0, 2, 2, Path.Direction.CW);
 		paint.setPathEffect(new PathDashPathEffect(p, 3, 2, PathDashPathEffect.Style.ROTATE));
 		//反锯齿
 		paint.setAntiAlias(true);
@@ -78,6 +76,18 @@ public class PhotoFixer extends ImageView {
 		//B
 			return res;
 				//(int)endX- (int)startX,(int)endY-(int)startY);
+	}
+	/**
+	 * @return the cacheBitmap
+	 */
+	public Bitmap getCacheBitmap() {
+		return cacheBitmap;
+	}
+	/**
+	 * @param cacheBitmap the cacheBitmap to set
+	 */
+	public void setCacheBitmap(Bitmap cacheBitmap) {
+		this.cacheBitmap = cacheBitmap;
 	}
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

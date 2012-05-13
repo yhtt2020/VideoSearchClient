@@ -66,6 +66,13 @@
             android:text="左转" />
 
         <Button
+            android:id="@+id/btnCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="高级" android:background="#33FF33FF"/>
+
+        <Button
             android:id="@+id/btnTurnRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,7 +88,7 @@
         android:layout_above="@+id/llbtns"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1"
-        android:scrollbars="horizontal|vertical" >
+        android:scrollbars="horizontal|vertical">
 
     </LinearLayout>
 

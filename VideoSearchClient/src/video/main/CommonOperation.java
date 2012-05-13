@@ -166,7 +166,14 @@ public class CommonOperation {
 		Button btnSearch=(Button)root.findViewById(R.id.btnSearch);
 		Button btnCancel=(Button)root.findViewById(R.id.btnCancel);
 		final ImageView imgPreview= (ImageView) root.findViewById(R.id.imgPreview);
-				
+		if(context.getClass()==PrevVideoActivity.class)
+		{
+			((PrevVideoActivity)context).stopPlayBack();
+			imgPreview.setVisibility(View.GONE);
+		}
+		else {
+			imgPreview.setImageBitmap(BitmapFactory.decodeByteArray(intent.getByteArrayExtra("photo"), 0,intent.getByteArrayExtra("photo").length));
+		}
 		btnSearch.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -179,14 +186,7 @@ public class CommonOperation {
 				intent.putExtra("samedegree",sameDegree);
 				//启动搜索结果活动		
 				context.startActivity(intent);
-				if(context.getClass()==PrevVideoActivity.class)
-				{
-					((PrevVideoActivity)context).stopPlayBack();
-					imgPreview.setVisibility(View.GONE);
-				}
-				else {
-					//imgPreview.setImageBitmap(intent.getByteArrayExtra(name))
-				}
+				
 				((Activity) context).finish();
 			}
 		});

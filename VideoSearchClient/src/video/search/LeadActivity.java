@@ -1,12 +1,16 @@
 package video.search;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.sql.Date;
+
 import video.ad.AdBanner;
 import video.main.CommonOperation;
 import video.values.Const;
 import video.values.Global;
 import video.values.HanderMessage;
 import video.values.SearchType;
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -19,6 +23,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.CompressFormat;
+import android.media.Ringtone;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +32,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.text.format.Time;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,24 +63,22 @@ public class LeadActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.logo);
 		(new loadMain()).start();
-		
-		
+
 	}
-	
+
 	@Override
 	protected void onResume() {
-		if(Global.userName!="")
-		{
-			TextView tvName=(TextView)findViewById(R.id.tvName);
-			if(tvName!=null)
+		if (Global.userName != "") {
+			TextView tvName = (TextView) findViewById(R.id.tvName);
+			if (tvName != null)
 				tvName.setText(Global.userName);
 		}
 		super.onResume();
 	}
 
-	private void showAd(){
+	private void showAd() {
 		View v = findViewById(R.id.llAd);
-		LinearLayout ll = (LinearLayout)v;
+		LinearLayout ll = (LinearLayout) v;
 		AdBanner.create(this, ll);
 	}
 
@@ -90,60 +95,62 @@ public class LeadActivity extends Activity implements OnClickListener {
 		btnCPhoto.setOnClickListener(this);
 		btnCVideo.setOnClickListener(this);
 		btnKeyWords.setOnClickListener(this);
-		
+
 		SharedPreferences preferences;
 		SharedPreferences.Editor editor;
-		preferences=PreferenceManager.getDefaultSharedPreferences(this);
-		//preferences=getSharedPreferences("coolsou", MODE_PRIVATE);
-		editor=preferences.edit();
-		//如果是首次运行本程序
-		if(preferences.getBoolean(Const.SETTING_AUTOLOGIN, false)==true)
-		{
-			Global.userid=preferences.getString(Const.SETTING_USERID, "0");
-			Global.userName=preferences.getString(Const.SETTING_USERNAME, "无");
-			if(Global.userName!="")
-			{
-				TextView tvName=(TextView)findViewById(R.id.tvName);
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		// preferences=getSharedPreferences("coolsou", MODE_PRIVATE);
+		editor = preferences.edit();
+		// 如果是首次运行本程序
+		if (preferences.getBoolean(Const.SETTING_AUTOLOGIN, false) == true) {
+			Global.userid = preferences.getString(Const.SETTING_USERID, "0");
+			Global.userName = preferences
+					.getString(Const.SETTING_USERNAME, "无");
+			if (Global.userName != "") {
+				TextView tvName = (TextView) findViewById(R.id.tvName);
 				tvName.setText(Global.userName);
 			}
 		}
-		if(preferences.getBoolean(Const.SETTING_ISFIRSTTIME, true)==true)
-		{
-			//只要任何一个目录创建失败就自动退出
-			if(!CommonOperation.createPath(Const.APP_DIR) || !CommonOperation.createPath(Const.APP_DIR_PHOTO) 
-				|| !CommonOperation.createPath(Const.APP_DIR_TEMP)) 
-			{
-				Toast.makeText(this, "非常抱歉，创建程序所需目录失败，请检查程序是否具有权限，程序将自动退出。", Toast.LENGTH_LONG).show();
+		if (preferences.getBoolean(Const.SETTING_ISFIRSTTIME, true) == true) {
+			// 只要任何一个目录创建失败就自动退出
+			if (!CommonOperation.createPath(Const.APP_DIR)
+					|| !CommonOperation.createPath(Const.APP_DIR_PHOTO)
+					|| !CommonOperation.createPath(Const.APP_DIR_TEMP)) {
+				Toast.makeText(this, "非常抱歉，创建程序所需目录失败，请检查程序是否具有权限，程序将自动退出。",
+						Toast.LENGTH_LONG).show();
 				this.finish();
 				return;
-			}
-			else
-			{
-				//设置为非第一次运行
+			} else {
+				// 设置为非第一次运行
 				setNotify();
-				Toast.makeText(this, "欢迎首次使用酷搜，希望您搜得愉快。", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "欢迎首次使用酷搜，希望您搜得愉快。", Toast.LENGTH_SHORT)
+						.show();
 				editor.putBoolean("isFirstTime", false);
 				editor.commit();
 			}
+		} else {
+			Toast.makeText(this, "欢迎回来，酷搜为您提供便捷搜索服务。", 1000).show();
 		}
-		else {
-			Toast.makeText(this, "欢迎回来，酷搜为您提供便捷搜索服务。",1000).show();
-		}
-		
+
 	}
+
 	private void setNotify() {
-		Intent intent =new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.coolsou.com"));
-		PendingIntent pi=PendingIntent.getActivity(LeadActivity.this, 0, intent, 0);
-		Notification notify=new Notification();
-		notify.icon=R.drawable.notify;
-		notify.tickerText="欢迎首次使用酷搜，请访问我们的主页获取帮助信息。";
-		notify.when=System.currentTimeMillis();
-		notify.defaults=Notification.DEFAULT_SOUND;
-		notify.flags= Notification.FLAG_AUTO_CANCEL;
-		notify.setLatestEventInfo(LeadActivity.this, "酷搜", "点击访问我们的主页获取帮助信息。", pi);
-		NotificationManager notificationManager=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		notificationManager.notify(NOYIFICATION_ID,notify);
+		Intent intent = new Intent(Intent.ACTION_VIEW,
+				Uri.parse("http://www.coolsou.com"));
+		PendingIntent pi = PendingIntent.getActivity(LeadActivity.this, 0,
+				intent, 0);
+		Notification notify = new Notification();
+		notify.icon = R.drawable.notify;
+		notify.tickerText = "欢迎首次使用酷搜，请访问我们的主页获取帮助信息。";
+		notify.when = System.currentTimeMillis();
+		notify.defaults = Notification.DEFAULT_SOUND;
+		notify.flags = Notification.FLAG_AUTO_CANCEL;
+		notify.setLatestEventInfo(LeadActivity.this, "酷搜", "点击访问我们的主页获取帮助信息。",
+				pi);
+		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notificationManager.notify(NOYIFICATION_ID, notify);
 	}
+
 	// 处理线程消息的Handler
 	private Handler mHandler = new Handler() {
 		@Override
@@ -168,105 +175,110 @@ public class LeadActivity extends Activity implements OnClickListener {
 		showExitDialog();
 	}
 
+	private String checkData(Intent data) {
+		String result = "";
+		if (data == null) {
+			CommonOperation.toast(this, "搜索取消。");
+			return "";
+		}
+		Uri uri = data.getData();
+		if (uri != null) {
+			result = uri.getPath();
+		} else {
+			Bundle extras=data.getExtras();
+			Bitmap bmp=(Bitmap)extras.get("data");
+			if(bmp!=null)
+			{
+				Time time=new Time();
+				time.setToNow();
+				String name=String.valueOf(time.toMillis(false));
+				File file=new File(Const.APP_DIR_PHOTO,name+".jpg");
+				FileOutputStream outputStream=null;
+				try{
+					outputStream=new FileOutputStream(file);
+					bmp.compress(CompressFormat.JPEG, 100, outputStream);
+					Toast.makeText(LeadActivity.this, "成功保存文件到 " +file.getPath(), 2000).show();
+					outputStream.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					CommonOperation.toast(this, "保存文件失败，请检查权限。");
+				}
+				return Const.APP_DIR_PHOTO+name+".jpg";
+			}
+			CommonOperation.toast(this, "搜索取消。");
+			return "";
+		}
+
+		return result;
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Uri mMediaUri;
-		 if(data==null)
-		 {
-			 showCancel();
-      				  return;
-		 }
+		if (data == null) {
+			showCancel();
+			return;
+		}
 		switch (requestCode) {
 		case RECODE_TAKEPHOTO:
-			
-			startPhotoFixer(analyseData(data));
+			String bitmap = checkData(data);
+			if (!bitmap.isEmpty()) {
+				Intent intent = new Intent(LeadActivity.this,
+						FixPhotoActivity.class);
+				intent.putExtra("bitmap", bitmap);
+				startActivity(intent);
+			}
 			break;
 		case RECODE_CHOOSEPHOTO:
-			mMediaUri=data.getData();   
-	            Cursor cursor = getContentResolver().query(mMediaUri, null, null, null, null);   
-	            cursor.moveToFirst();   
-	            String mediaFilePath = cursor.getString(1);
-	            
-	            Bitmap photo = BitmapFactory.decodeFile(mediaFilePath);
-	            Display currentDisplay=getWindowManager().getDefaultDisplay();
-	            float rate= (((float)photo.getWidth())/photo.getHeight());
-	            Bitmap photoScaled=ThumbnailUtils.extractThumbnail(photo, currentDisplay.getWidth(), (int) (currentDisplay.getWidth()/rate));
-			startPhotoFixer(photoScaled);
+			mMediaUri = data.getData();
+			Cursor cursor = getContentResolver().query(mMediaUri, null, null,
+					null, null);
+			cursor.moveToFirst();
+			String mediaFilePath = cursor.getString(1);
+			if (!mediaFilePath.isEmpty()) {
+				Intent intent = new Intent(LeadActivity.this,
+						FixPhotoActivity.class);
+				intent.putExtra("bitmap", mediaFilePath);
+				startActivity(intent);
+			}
 			break;
-		case RECODE_TAKEVIDEO :
-			if(resultCode!= RESULT_OK)
+		case RECODE_TAKEVIDEO:
+			if (resultCode != RESULT_OK)
 				break;
 			Uri videoFileUri = data.getData();
-			if(videoFileUri==null)
-			{
+			if (videoFileUri == null) {
 				showCancel();
-	      				  return;
+				return;
 			}
-			Intent intent=new Intent(LeadActivity.this,PrevVideoActivity.class);
+			Intent intent = new Intent(LeadActivity.this,
+					PrevVideoActivity.class);
 			intent.putExtra("videofile", videoFileUri);
 			startActivity(intent);
 			break;
 		case RECODE_CHOOSEVIDEO:
-			mMediaUri=data.getData();   
-	        Cursor cursor1 = getContentResolver().query(mMediaUri, null, null, null, null);   
-	        cursor1.moveToFirst();   
-	        File mediaFilePath1 =new File( cursor1.getString(1));
-	            Uri videofile= Uri.fromFile(mediaFilePath1);
-	           	 if (videofile== null){
-	            	showCancel();
-	      				  return;
-	            }
-	           	Intent intent1=new Intent(LeadActivity.this,PrevVideoActivity.class);
-	 			intent1.putExtra("videofile", videofile);
-				startActivity(intent1);
+			mMediaUri = data.getData();
+			Cursor cursor1 = getContentResolver().query(mMediaUri, null, null,
+					null, null);
+			cursor1.moveToFirst();
+			File mediaFilePath1 = new File(cursor1.getString(1));
+			Uri videofile = Uri.fromFile(mediaFilePath1);
+			if (videofile == null) {
+				showCancel();
+				return;
+			}
+			Intent intent1 = new Intent(LeadActivity.this,
+					PrevVideoActivity.class);
+			intent1.putExtra("videofile", videofile);
+			startActivity(intent1);
 			break;
 		}
-		
-		
-	}
-	private void showCancel()
-	{
-		Toast.makeText(LeadActivity.this,
-				   "搜索取消。", Toast.LENGTH_SHORT).show();
-	}
-	private Bitmap analyseData(Intent data) {
-		 if (data==null)
-		  {   
-			 Toast.makeText(LeadActivity.this,
-					   "搜索取消。", Toast.LENGTH_LONG).show();
-			 return null;
-		 }
-			Uri uri = data.getData();
-			Bitmap photo = null;
-			if (uri != null) {
-				photo = BitmapFactory.decodeFile(uri.getPath());
-			}
-			if (photo == null) {
-				Bundle bundle = data.getExtras();
-				if (bundle != null) {
-					photo = (Bitmap) bundle.get("data");
-				} else {
-					Toast.makeText(LeadActivity.this,
-					   "搜索取消。", Toast.LENGTH_LONG).show();
-					  return  null;
-				}
-			}
-			return photo;
-	}
-  private void startPhotoFixer(Bitmap photo) {
-	   if(photo==null || photo.getWidth()==-1)
-	   {
-		   Toast.makeText(LeadActivity.this,
-				   "搜索取消。", Toast.LENGTH_LONG).show();
-		   return ;
-	   }
-		Intent intent = new Intent(LeadActivity.this,
-				FixPhotoActivity.class);
-		//intent.putExtra("bitmap", photo);
-		intent.putExtra("bitmap", CommonOperation.bitmapToBytes(photo));
-		startActivity(intent);
-}
 
+	}
+
+	private void showCancel() {
+		Toast.makeText(LeadActivity.this, "搜索取消。", Toast.LENGTH_SHORT).show();
+	}
 
 	// 读入主界面的线程
 	private class loadMain extends Thread {
@@ -288,23 +300,21 @@ public class LeadActivity extends Activity implements OnClickListener {
 	// 菜单功能实现
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		Intent intent =new Intent();
+		Intent intent = new Intent();
 		switch (item.getItemId()) {
 		case R.id.menuLogin:
-			intent.setClass(LeadActivity.this,LoginActivity.class);
+			intent.setClass(LeadActivity.this, LoginActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.menuRegister:
-			intent.setClass(LeadActivity.this,RegisterActivity.class);
+			intent.setClass(LeadActivity.this, RegisterActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.menuUser:
-			if(Global.userid=="0")
-			{
+			if (Global.userid == "0") {
 				CommonOperation.toast(LeadActivity.this, "您尚未登录，请先登录。");
-			}
-			else {
-				intent.setClass(LeadActivity.this,UserCenterActivity.class);
+			} else {
+				intent.setClass(LeadActivity.this, UserCenterActivity.class);
 				startActivity(intent);
 			}
 			break;
@@ -322,21 +332,21 @@ public class LeadActivity extends Activity implements OnClickListener {
 		}
 		return true;
 	}
-	private void showExitDialog()
-	{
+
+	private void showExitDialog() {
 		final Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("确认");
 		builder.setMessage("确定退出酷搜？");
-		builder.setPositiveButton("确定",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						LeadActivity.this.finish();
-						System.exit(0);
-					}
-				});
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				LeadActivity.this.finish();
+				System.exit(0);
+			}
+		});
 		builder.setNegativeButton("取消", null);
 		builder.create().show();
 	}
+
 	// 创建菜单
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -360,30 +370,33 @@ public class LeadActivity extends Activity implements OnClickListener {
 			skintent.putExtra("type", SearchType.KEYWORDS);
 			startActivity(skintent);
 			break;
-		//拍照搜索
+		// 拍照搜索
 		case R.id.btnsphoto:
 			Intent tpintent = new Intent();
 			tpintent.setAction("android.media.action.IMAGE_CAPTURE");
 			startActivityForResult(tpintent, RECODE_TAKEPHOTO);
-		   break;
+			break;
 		case R.id.btnscphoto:
-			Intent cpintent=new Intent();
-			cpintent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*" );   
-			cpintent.setAction(Intent.ACTION_PICK); 
+			Intent cpintent = new Intent();
+			cpintent.setDataAndType(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+			cpintent.setAction(Intent.ACTION_PICK);
 			startActivityForResult(cpintent, RECODE_CHOOSEPHOTO);
 			break;
-		//录像搜索
+		// 录像搜索
 		case R.id.btnsvideo:
-			Intent tvIntent=new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
+			Intent tvIntent = new Intent(
+					android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
 			startActivityForResult(tvIntent, RECODE_TAKEVIDEO);
 			break;
 		case R.id.btnscvideo:
-			Intent cvintent=new Intent();
-			cvintent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*" );   
-			cvintent.setAction(Intent.ACTION_PICK); 
+			Intent cvintent = new Intent();
+			cvintent.setDataAndType(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*");
+			cvintent.setAction(Intent.ACTION_PICK);
 			startActivityForResult(cvintent, RECODE_CHOOSEVIDEO);
 			break;
-			
+
 		}
 	}
 }

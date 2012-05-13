@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.format.Time;
@@ -38,14 +41,17 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 	private Button btnSave=null;
 	private Button btnCancel=null;
 	private Button btnAdvance=null;
+	private Button btnCrop=null;
+	
+	String photopath=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fixphoto);
 		LinearLayout ll= (LinearLayout)findViewById(R.id.fixerlayout);
 		//得到照片
-		Bitmap photo=BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("bitmap"), 0, getIntent().getByteArrayExtra("bitmap").length);
+		photopath=getIntent().getStringExtra("bitmap");
+		Bitmap photo=BitmapFactory.decodeFile(photopath);
 		if(photo==null)
 		{
 			finish();
@@ -63,6 +69,7 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		btnSave=(Button)findViewById(R.id.btnSave);
 		btnCancel=(Button)findViewById(R.id.btnCancel);
 		btnAdvance=(Button)findViewById(R.id.btnAdvance);
+		btnCrop=(Button)findViewById(R.id.btnCrop);
 		//设置事件
 		btnSelectAll.setOnClickListener(this);
 		btnTurnLeft.setOnClickListener(this);
@@ -70,7 +77,7 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		btnSave.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
 		btnAdvance.setOnClickListener(this);
-		
+		btnCrop.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -98,9 +105,25 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 			showSaveDialog();
 			break;
 		case R.id.btnAdvance:
-			CommonOperation.showAdvanceDialog(FixPhotoActivity.this,searchIntent);		
-		default:
+			CommonOperation.showAdvanceDialog(FixPhotoActivity.this,searchIntent);
 			break;
+		case R.id.btnCrop:
+			startPhotoZoom(Uri.fromFile(new File(photopath)));
+		default:
+			break;	
+		}
+	}
+	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(data==null)
+			return;
+		Bundle extras = data.getExtras();         
+		if (extras != null) {              
+			Bitmap photo = extras.getParcelable("data");              
+			this.photoFixer.setImageBitmap(photo);
+			this.photoFixer.postInvalidate();
 		}
 	}
 	private void showSaveDialog() {
@@ -121,7 +144,7 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 				FileOutputStream outputStream=null;
 				try{
 					outputStream=new FileOutputStream(file);
-					bm.compress(CompressFormat.JPEG, 100, outputStream);
+					bm.compress(CompressFormat.PNG, 100, outputStream);
 					Toast.makeText(FixPhotoActivity.this, "成功保存文件到 " +file.getPath(), 3000).show();
 					outputStream.close();
 				}
@@ -133,6 +156,17 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		}).setNegativeButton("取消", null).show();
 	}
 	
-	
+	public void startPhotoZoom(Uri uri) {  
+        /*           * 至于下面这个Intent的ACTION是怎么知道的，大家可以看下自己路径下的如下网页           * yourself_sdk_path/docs/reference/android/content/Intent.html           * 直接在里面Ctrl+F搜：CROP ，之前小马没仔细看过，其实安卓系统早已经有自带图片裁剪功能,           * 是直接调本地库的，小马不懂C C++  这个不做详细了解去了，有轮子就用轮子，不再研究轮子是怎么           * 制做的了...吼吼           */         
+		Intent intent = new Intent("com.android.camera.action.CROP");          
+		intent.setDataAndType(uri, "image/*");          //下面这个crop=true是设置在开启的Intent中设置显示的VIEW可裁剪          
+		intent.putExtra("crop", "true");          // aspectX aspectY 是宽高的比例          
+	//	intent.putExtra("aspectX", 1);         
+	//	intent.putExtra("aspectY", 1);          // outputX outputY 是裁剪图片宽高          
+	//	intent.putExtra("outputX", 150);          
+	//	intent.putExtra("outputY", 150);         
+		intent.putExtra("return-data", true);          
+		startActivityForResult(intent, 3);
+	}  
 	
 }
