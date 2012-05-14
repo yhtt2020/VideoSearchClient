@@ -20,7 +20,6 @@ import android.widget.VideoView;
 public class PrevVideoActivity extends Activity implements OnClickListener {
 	private Uri videoFileUri=null;
 	private VideoView videoView=null;
-	private Button btnSearch=null;
 	private Button btnCancel=null;
 	private Button btnAdvance=null;
 	private MediaController mediaController=null;
@@ -35,7 +34,6 @@ public class PrevVideoActivity extends Activity implements OnClickListener {
 		videoView.setMediaController(mediaController);
 		btnCancel=(Button)findViewById(R.id.btnCancel);
 		btnAdvance=(Button)findViewById(R.id.btnAdvance);
-		btnSearch.setOnClickListener(this);
 		btnCancel.setOnClickListener(this);
 		btnAdvance.setOnClickListener(this);
 	}

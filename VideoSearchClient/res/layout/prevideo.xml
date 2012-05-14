@@ -27,23 +27,21 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="取"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/spCutNum"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:entries="@array/cutnum" />
+            android:entries="@array/cutnum" android:background="@drawable/recmenubtn" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:layout_weight="1"
             android:text="帧"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -51,15 +49,13 @@
             android:id="@+id/btnAdvance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="下一步" />
+            android:text="下一步" style="@style/stymenubtn" android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="取消" />
+            android:text="取消" style="@style/stymenubtn" android:layout_weight="1"/>
     </LinearLayout>
 
     <LinearLayout

@@ -28,28 +28,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="全选" />
+            android:text="全选" style="@style/stymenubtn" android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="保存" />
+            android:text="保存" style="@style/stymenubtn" android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnAdvance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="下一步" />
+            android:text="下一步" style="@style/stymenubtn" android:layout_margin="5dp"/>
 
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="取消" />
+            android:text="取消" style="@style/stymenubtn" android:layout_margin="5dp"/>
     </LinearLayout>
 
     <LinearLayout

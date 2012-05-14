@@ -199,6 +199,11 @@ public class CommonOperation {
 		});
 		popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
 	}
+	public static void startWebBrowser(Context context,String url){
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+				Uri.parse(url));
+		context.startActivity(browserIntent);
+	}
 	
 	public static byte[] bitmapToBytes(Bitmap bitmap) {
 		if (bitmap == null) {

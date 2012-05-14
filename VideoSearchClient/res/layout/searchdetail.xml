@@ -116,8 +116,7 @@
         android:layout_height="40dp"
         android:layout_alignLeft="@+id/linearLayout3"
         android:layout_below="@+id/linearLayout3"
-        android:background="@drawable/recmenubtn"
-        android:text="搜索" android:layout_margin="20dp"/>
+        android:text="搜索" android:layout_margin="20dp" style="@style/stymenubtn"/>
 
     <Button
         android:id="@+id/btnCancel"
@@ -126,8 +125,7 @@
         android:layout_alignBaseline="@+id/btnSearch"
         android:layout_alignBottom="@+id/btnSearch"
         android:layout_alignRight="@+id/linearLayout3"
-        android:background="@drawable/recmenubtn"
-        android:text="取消" android:layout_margin="20dp"/>
+        android:text="取消" android:layout_margin="20dp" style="@style/stymenubtn"/>
 
  
 </RelativeLayout>

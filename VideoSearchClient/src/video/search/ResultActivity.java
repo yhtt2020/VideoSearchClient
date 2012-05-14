@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -55,6 +56,7 @@ import android.widget.Toast;
  * 
  */
 public class ResultActivity extends Activity {
+	private static final String HTTP_AD = "http://m.tmall.com/channel/act/new/chaoliutxu.html?sid=9896c162f322c7c6&v=0&spm=41.135707.248138.4&sprefer=sygd09";
 	private TextView resultCount;
 	private final int REQUEST_MapPos = 1212;
 
@@ -88,6 +90,15 @@ public class ResultActivity extends Activity {
 		lvResult = (ListView) findViewById(R.id.lvResult);
 		glyResult = (Gallery) findViewById(R.id.glyResult);
 
+		ImageView imgAd=(ImageView)findViewById(R.id.imgAd);
+		imgAd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CommonOperation.startWebBrowser(ResultActivity.this, HTTP_AD);
+			}
+		});
+		
 		// AdBanner.create(this, (LinearLayout)findViewById(R.id.llAd));
 
 		Intent intent = getIntent();
@@ -113,7 +124,10 @@ public class ResultActivity extends Activity {
 			}
 			break;
 		case SearchType.PHOTO:
-
+			ImageView imgPreview=(ImageView)findViewById(R.id.imgPreview);
+			 byte[] photo = intent.getByteArrayExtra("photo");
+			 imgPreview.setVisibility(View.VISIBLE);
+			imgPreview.setImageBitmap(BitmapFactory.decodeByteArray(photo	, 0, photo.length));
 			startSearchByPhoto(intent.getByteArrayExtra("photo"), alpha,
 					samedegree, kind);
 			break;
@@ -248,9 +262,7 @@ public class ResultActivity extends Activity {
 					startActivityForResult(mapintent, REQUEST_MapPos);
 					break;
 				case R.id.btnDetail:
-					Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-							Uri.parse(good.getUrl()));
-					startActivity(browserIntent);
+					CommonOperation.startWebBrowser(ResultActivity.this, good.getUrl());
 					break;
 				case R.id.btnAgain:
 					File file = new File(Const.APP_DIR_TEMP
@@ -259,11 +271,10 @@ public class ResultActivity extends Activity {
 						Intent intent2 = new Intent(ResultActivity.this,
 								FixPhotoActivity.class);
 						// intent.putExtra("bitmap", photo);
-						intent2.putExtra("bitmap", CommonOperation
-								.bitmapToBytes(BitmapFactory
-										.decodeFile(Const.APP_DIR_TEMP
+						intent2.putExtra("bitmap",
+										Const.APP_DIR_TEMP
 												+ String.valueOf(good.getId())
-												+ ".jpg")));
+												+ ".jpg");
 						startActivity(intent2);
 						finish();
 					} else {

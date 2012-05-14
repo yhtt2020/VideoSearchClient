@@ -32,7 +32,8 @@
             android:text="用户名"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-
+
+
     <Gallery
         android:id="@+id/glyPusher"
         android:layout_width="match_parent"
@@ -73,6 +74,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="返回"/>
+        android:text="返回" style="@style/stymenubtn"/>
 
 </RelativeLayout>

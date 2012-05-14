@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/itemback"
     android:orientation="vertical" >
-
+
+
     <include
         android:id="@+id/include1"
         android:layout_width="match_parent"
@@ -92,13 +93,13 @@
                 android:id="@+id/register"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="注册" android:layout_marginRight="10dp"/>
+                android:text="注册" android:layout_marginRight="10dp" style="@style/stymenubtn"/>
 
             <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="取消" android:layout_marginRight="20dp"/>
+                android:text="取消" android:layout_marginRight="20dp" style="@style/stymenubtn"/>
 
         </LinearLayout>
 

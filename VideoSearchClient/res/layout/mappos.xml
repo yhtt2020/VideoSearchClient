@@ -39,24 +39,28 @@
             android:id="@+id/tgbtnTrafic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ToggleButton" android:textOn="卫星图" android:textOff="交通图" android:textSize="20dp"/>
+            android:text="ToggleButton" android:textOn="卫星图" android:textOff="交通图" android:textSize="20dp" style="@style/stymenubtn"/>
 
     </LinearLayout>
-
-
+
       <com.google.android.maps.MapView
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:id="@+id/mapview"
           android:layout_width="fill_parent"
           android:layout_height="fill_parent"
-          android:apiKey="0JMISqatt41TApk4s_ZAU2wC4CJNdGASxvbzDYg" android:layout_below="@id/choose"
-
-    android:focusableInTouchMode="true" android:layout_marginBottom="60dp" android:clickable="true"/>
+          android:layout_alignParentBottom="true"
+          android:layout_below="@id/choose"
+          android:apiKey="0JMISqatt41TApk4s_ZAU2wC4CJNdGASxvbzDYg"
+          android:clickable="true"
+          android:focusableInTouchMode="true" />
 
       <Button
           android:id="@+id/btnBack"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="返回到搜索结果页面" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:layout_marginBottom="5dp"/>
+          style="@style/stymenubtn"
+          android:layout_width="80dp"
+          android:layout_height="40dp"
+          android:layout_alignBottom="@+id/choose"
+          android:layout_alignRight="@+id/words"
+          android:text="返回" />
 
 </RelativeLayout>

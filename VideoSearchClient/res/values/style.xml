@@ -10,7 +10,9 @@
    <item name="android:windowExitAnimation">@anim/ani_out</item>       <!-- 指定消失的动画xml  -->
 
  </style>
-
+   <style name="stymenubtn">
+        <item name="android:background">@drawable/btnmenubtn</item>
+    </style>
     
     
     

@@ -41,12 +41,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeadActivity extends Activity implements OnClickListener {
 
+	private static final String HTTP_AD = "http://m.taobao.com/channel/act/sale/t-shirt.html?sid=9896c162f322c7c6&spm=41.135707.248138.3&sprefer=sygd07";
 	private static final int RECODE_TAKEPHOTO = 0x001;
 	private static final int RECODE_CHOOSEPHOTO = 0x002;
 	private static final int RECODE_TAKEVIDEO = 0x003;
@@ -83,19 +85,28 @@ public class LeadActivity extends Activity implements OnClickListener {
 	}
 
 	private void init() {
-		showAd();
+		// showAd();
 		btnPhoto = (Button) findViewById(R.id.btnsphoto);
 		btnVideo = (Button) findViewById(R.id.btnsvideo);
 		btnCPhoto = (Button) findViewById(R.id.btnscphoto);
 		btnCVideo = (Button) findViewById(R.id.btnscvideo);
-		btnKeyWords = (Button) findViewById(R.id.btnskeywords);
-
+		btnKeyWords = (Button) findViewById(R.id.btnskeywords);	
+		
 		btnPhoto.setOnClickListener(this);
 		btnVideo.setOnClickListener(this);
 		btnCPhoto.setOnClickListener(this);
 		btnCVideo.setOnClickListener(this);
 		btnKeyWords.setOnClickListener(this);
 
+		ImageView imgAd=(ImageView)findViewById(R.id.imgAd);
+		imgAd.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				CommonOperation.startWebBrowser(LeadActivity.this, HTTP_AD);
+			}
+		});
+		
 		SharedPreferences preferences;
 		SharedPreferences.Editor editor;
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -185,26 +196,29 @@ public class LeadActivity extends Activity implements OnClickListener {
 		if (uri != null) {
 			result = uri.getPath();
 		} else {
-			Bundle extras=data.getExtras();
-			Bitmap bmp=(Bitmap)extras.get("data");
-			if(bmp!=null)
-			{
-				Time time=new Time();
+			Bundle extras = data.getExtras();
+			if (extras == null) {
+				CommonOperation.toast(this, "搜索取消。");
+				return "";
+			}
+			Bitmap bmp = (Bitmap) extras.get("data");
+			if (bmp != null) {
+				Time time = new Time();
 				time.setToNow();
-				String name=String.valueOf(time.toMillis(false));
-				File file=new File(Const.APP_DIR_PHOTO,name+".jpg");
-				FileOutputStream outputStream=null;
-				try{
-					outputStream=new FileOutputStream(file);
+				String name = String.valueOf(time.toMillis(false));
+				File file = new File(Const.APP_DIR_PHOTO, name + ".jpg");
+				FileOutputStream outputStream = null;
+				try {
+					outputStream = new FileOutputStream(file);
 					bmp.compress(CompressFormat.JPEG, 100, outputStream);
-					Toast.makeText(LeadActivity.this, "成功保存文件到 " +file.getPath(), 2000).show();
+					Toast.makeText(LeadActivity.this,
+							"成功保存文件到 " + file.getPath(), 2000).show();
 					outputStream.close();
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 					CommonOperation.toast(this, "保存文件失败，请检查权限。");
 				}
-				return Const.APP_DIR_PHOTO+name+".jpg";
+				return Const.APP_DIR_PHOTO + name + ".jpg";
 			}
 			CommonOperation.toast(this, "搜索取消。");
 			return "";
@@ -294,7 +308,6 @@ public class LeadActivity extends Activity implements OnClickListener {
 			mHandler.sendMessage(msg);
 			super.run();
 		}
-
 	}
 
 	// 菜单功能实现
