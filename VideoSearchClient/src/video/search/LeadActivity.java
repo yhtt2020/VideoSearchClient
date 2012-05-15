@@ -242,7 +242,20 @@ public class LeadActivity extends Activity implements OnClickListener {
             	  Intent intent = new Intent(LeadActivity.this,
   						FixPhotoActivity.class);
   				String bitmap=new String(file.toString());
-  				intent.putExtra("bitmap", bitmap);
+  				Bitmap bitmap2=CommonOperation.getFitBitmap(this, bitmap);
+  				File file=new File(Const.APP_DIR_PHOTO,CommonOperation.getTimeString()+".jpg");
+				FileOutputStream outputStream=null;
+				try{
+					outputStream=new FileOutputStream(file);
+					bitmap2.compress(CompressFormat.JPEG, 100, outputStream);
+					Toast.makeText(LeadActivity.this, "成功保存文件到 " +file.getPath(), 3000).show();
+					outputStream.close();
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+					Toast.makeText(LeadActivity.this, "保存文件失败，请检查权限。"+e.getMessage(), 3000).show();
+				}
+  				intent.putExtra("bitmap", file.toString());
   				startActivity(intent);
               }
 			/*

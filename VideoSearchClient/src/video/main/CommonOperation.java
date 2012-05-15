@@ -27,6 +27,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.text.format.Time;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -242,5 +243,29 @@ public class CommonOperation {
 		time.setToNow();
 		String result = String.valueOf(time.toMillis(false));
 		return result;
+	}
+	public  static Bitmap getFitBitmap(Context context,String photopath) {
+		Bitmap photo;
+		Display currentDisplay=((Activity) context).getWindowManager().getDefaultDisplay();
+		int dw=currentDisplay.getWidth();
+		int dh=currentDisplay.getHeight();
+		BitmapFactory.Options bmOptions=new BitmapFactory.Options();
+		bmOptions.inJustDecodeBounds=true;
+		photo=BitmapFactory.decodeFile(photopath,bmOptions);
+		int heightRatio=(int)Math.ceil(bmOptions.outHeight/(float)dh);
+		int widthRatio=(int)Math.ceil(bmOptions.outWidth/(float)dw);
+		if(heightRatio>1 && widthRatio>1)
+		{
+			if(heightRatio>widthRatio)
+			{
+				bmOptions.inSampleSize=heightRatio;
+			}
+			else {
+				bmOptions.inSampleSize=widthRatio;
+			}
+		}
+		bmOptions.inJustDecodeBounds=false; 
+		photo=BitmapFactory.decodeFile(photopath,bmOptions);
+		return photo;
 	}
 }

@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.format.Time;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -51,7 +52,8 @@ public class FixPhotoActivity extends Activity implements OnClickListener {
 		LinearLayout ll= (LinearLayout)findViewById(R.id.fixerlayout);
 		//µ√µΩ’’∆¨
 		photopath=getIntent().getStringExtra("bitmap");
-		Bitmap photo=BitmapFactory.decodeFile(photopath);
+		Bitmap photo;
+		photo=CommonOperation.getFitBitmap(this, photopath);
 		if(photo==null)
 		{
 			finish();
