@@ -1,6 +1,7 @@
 package video.search;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.sql.Date;
 
@@ -28,6 +29,7 @@ import android.media.Ringtone;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -59,7 +61,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 	private Button btnCPhoto = null;
 	private Button btnCVideo = null;
 	private Button btnKeyWords = null;
-
+	private String pathString="";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -180,6 +182,9 @@ public class LeadActivity extends Activity implements OnClickListener {
 		}
 
 	};
+	private String filename;
+	private File file;
+	private String filepath;
 
 	@Override
 	public void onBackPressed() {
@@ -203,9 +208,7 @@ public class LeadActivity extends Activity implements OnClickListener {
 			}
 			Bitmap bmp = (Bitmap) extras.get("data");
 			if (bmp != null) {
-				Time time = new Time();
-				time.setToNow();
-				String name = String.valueOf(time.toMillis(false));
+				String name=CommonOperation.getTimeString();
 				File file = new File(Const.APP_DIR_PHOTO, name + ".jpg");
 				FileOutputStream outputStream = null;
 				try {
@@ -230,21 +233,37 @@ public class LeadActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		Uri mMediaUri;
-		if (data == null) {
-			showCancel();
-			return;
-		}
+		
 		switch (requestCode) {
 		case RECODE_TAKEPHOTO:
-			String bitmap = checkData(data);
-			if (!bitmap.isEmpty()) {
+              file = new File(filepath, filename);   
+              if(file.exists())
+              {
+            	  Intent intent = new Intent(LeadActivity.this,
+  						FixPhotoActivity.class);
+  				String bitmap=new String(file.toString());
+  				intent.putExtra("bitmap", bitmap);
+  				startActivity(intent);
+              }
+			/*
+			if (!pathString.isEmpty() && (new File(pathString)).exists()) {
+				
 				Intent intent = new Intent(LeadActivity.this,
 						FixPhotoActivity.class);
+				String bitmap=new String(pathString);
 				intent.putExtra("bitmap", bitmap);
+				pathString="";
 				startActivity(intent);
+			}*/
+			else {
+				CommonOperation.toast(LeadActivity.this, "搜索取消。");
 			}
 			break;
 		case RECODE_CHOOSEPHOTO:
+			if (data == null) {
+				showCancel();
+				return;
+			}
 			mMediaUri = data.getData();
 			Cursor cursor = getContentResolver().query(mMediaUri, null, null,
 					null, null);
@@ -258,6 +277,10 @@ public class LeadActivity extends Activity implements OnClickListener {
 			}
 			break;
 		case RECODE_TAKEVIDEO:
+			if (data == null) {
+				showCancel();
+				return;
+			}
 			if (resultCode != RESULT_OK)
 				break;
 			Uri videoFileUri = data.getData();
@@ -271,6 +294,10 @@ public class LeadActivity extends Activity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case RECODE_CHOOSEVIDEO:
+			if (data == null) {
+				showCancel();
+				return;
+			}
 			mMediaUri = data.getData();
 			Cursor cursor1 = getContentResolver().query(mMediaUri, null, null,
 					null, null);
@@ -370,12 +397,18 @@ public class LeadActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		
+		Uri outputFileUri;
 		switch (v.getId()) {
 
 		// 按下关键字搜索按钮
 		case R.id.btnskeywords:
 			String keyWords = ((EditText) findViewById(R.id.edtKeywords))
 					.getText().toString();
+			if(keyWords.isEmpty())
+			{
+				return;
+			}
 			// 启动搜索结果界面
 			Intent skintent = new Intent(LeadActivity.this,
 					ResultActivity.class);
@@ -385,9 +418,30 @@ public class LeadActivity extends Activity implements OnClickListener {
 			break;
 		// 拍照搜索
 		case R.id.btnsphoto:
+			
+		    filename = String.valueOf(CommonOperation.getTimeString() + ".jpg");   
+	        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);   
+	        File f = new File(Environment.getExternalStorageDirectory()   
+	                + "/oolsou/photo");   
+	        if (!f.exists()) {   
+	            f.mkdirs();   
+	        }   
+	  
+	        filepath = f.getPath();   
+	        file = new File(filepath, filename);   
+	        outputFileUri = Uri.fromFile(file);   
+	  
+	        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);   
+	        startActivityForResult(intent, RECODE_TAKEPHOTO);   
+
+			
+			
+			/*
 			Intent tpintent = new Intent();
 			tpintent.setAction("android.media.action.IMAGE_CAPTURE");
-			startActivityForResult(tpintent, RECODE_TAKEPHOTO);
+			pathString=CommonOperation.getTimeString() + ".jpg";
+			tpintent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,Uri.parse("file:///sdcard/"+pathString));
+			startActivityForResult(tpintent, RECODE_TAKEPHOTO);*/
 			break;
 		case R.id.btnscphoto:
 			Intent cpintent = new Intent();

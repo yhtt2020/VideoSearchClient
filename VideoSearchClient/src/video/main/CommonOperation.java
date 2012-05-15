@@ -26,6 +26,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.opengl.Visibility;
+import android.text.format.Time;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -181,9 +182,11 @@ public class CommonOperation {
 				String kind=spKind.getSelectedItem().toString();
 				String sameDegree=spSameDegree.getSelectedItem().toString();
 				//放入三个参数
-				intent.putExtra("alpha", alpha);
+				double al= (Math.sqrt(Double.parseDouble(alpha))) ;
+				double sa= (Math.sqrt(Double.parseDouble(sameDegree))) ;
+				intent.putExtra("alpha", String.valueOf(al));
 				intent.putExtra("kind", kind);
-				intent.putExtra("samedegree",sameDegree);
+				intent.putExtra("samedegree",String.valueOf(sameDegree));
 				//启动搜索结果活动		
 				context.startActivity(intent);
 				
@@ -232,5 +235,12 @@ public class CommonOperation {
 				catch(Exception e){
 				}
 			}});
+	}
+	public static String getTimeString()
+	{
+		Time time = new Time();
+		time.setToNow();
+		String result = String.valueOf(time.toMillis(false));
+		return result;
 	}
 }

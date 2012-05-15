@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 public class VideoPlayerActivity extends Activity {
@@ -15,7 +16,7 @@ public class VideoPlayerActivity extends Activity {
 	private Button btnPause, btnPlayUrl, btnStop;
 	private SeekBar skbProgress;
 	private Player player;
-	private String url="";
+	private String url = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,21 @@ public class VideoPlayerActivity extends Activity {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		surfaceView = (SurfaceView) this.findViewById(R.id.surfaceView1);
 		setTitle(getIntent().getStringExtra("name"));
-		url=getIntent().getStringExtra("url");
-		
+		url = getIntent().getStringExtra("url");
+
+		surfaceView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				LinearLayout llPlayBar = (LinearLayout) findViewById(R.id.playbar);
+				if (llPlayBar.getVisibility() == View.INVISIBLE)
+					llPlayBar.setVisibility(View.VISIBLE);
+				else {
+					llPlayBar.setVisibility(View.INVISIBLE);
+				}
+			}
+		});
+
 		btnPlayUrl = (Button) this.findViewById(R.id.btnPlayUrl);
 		btnPlayUrl.setOnClickListener(new ClickEvent());
 

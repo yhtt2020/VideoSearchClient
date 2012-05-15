@@ -12,17 +12,24 @@
         <item >0.9</item>
     </string-array>
     <string-array name="kind">
-        <item >全部</item>
-        <item >服装</item>
-        <item >手机</item>
-        <item >宠物</item>
-        <item >玩具</item>
-        <item >笔记本</item>
-        <item >化妆品</item>
-        <item >图书</item>
-        <item >包包</item>
-        <item >鞋子</item>
-        <item >创意礼品</item>
+        <item >(女)T恤</item>
+        <item >(女)羽绒服</item>
+        <item >(女)风衣</item>
+        <item >(女)卫衣</item>
+        <item >(女)牛仔裤</item>
+        <item >(女)休闲裤</item>
+        <item >(女)衬衫</item>
+        <item >(男)T恤</item>
+        <item >(男)羽绒服</item>
+        <item >(男)风衣</item>
+        <item >(男)卫衣</item>
+        <item >(男)牛仔裤</item>
+        <item >(男)休闲裤</item>
+        <item >(男)衬衫</item>
+        <item >(女)靴子</item>
+        <item >(女)运动鞋</item>
+        <item >(男)运动鞋</item>
+        <item >(男)帆布鞋</item>
     </string-array>
         <string-array name="samedegree">
         <item >0.1</item>
