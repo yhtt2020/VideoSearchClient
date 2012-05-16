@@ -130,7 +130,17 @@ public class GoodAdapter extends BaseAdapter {
 		((Activity)context).registerForContextMenu(relativeLayout);
 		relativeLayout.setLongClickable(true);
 		relativeLayout.setTag(positon);
+		 relativeLayout.setOnLongClickListener(new View.OnLongClickListener()
+		 {
 
+		 @Override
+		 public boolean onLongClick(View v) {
+		 int i= (Integer) v.getTag();
+		 Log.e("´íÎó", String.valueOf(i));
+		 ResultActivity.position= (Integer) v.getTag();
+		 return false;
+		 }
+	});
 		return relativeLayout;
 	}
 	

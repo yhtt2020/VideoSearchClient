@@ -56,7 +56,7 @@ import android.widget.Toast;
  * 
  */
 public class ResultActivity extends Activity {
-	private static final String HTTP_AD = "http://m.tmall.com/channel/act/new/chaoliutxu.html?sid=9896c162f322c7c6&v=0&spm=41.135707.248138.4&sprefer=sygd09";
+	private static final String HTTP_AD = "http://www.ningmenggf.com/?bdclkid=69-EJ2x9sQ6zkmvQqbh5pHtdZo0K0gs-5ud9wkJLF4cgjuVT3J";
 	private TextView resultCount;
 	private final int REQUEST_MapPos = 1212;
 
@@ -159,20 +159,6 @@ public class ResultActivity extends Activity {
 		glyResult = (Gallery) findViewById(R.id.glyResult);
 		glyResult.setAdapter(itemAdapter);
 		glyResult.setOnItemClickListener(new itemClicListener());
-
-		// relativeLayout.setOnLongClickListener(new View.OnLongClickListener()
-		// {
-
-		// @Override
-		// public boolean onLongClick(View v) {
-		// int i= (Integer) v.getTag();
-		// Log.e("错误", String.valueOf(i));
-		// ResultActivity.position= (Integer) v.getTag();
-		// return false;
-		// }
-		// });
-
-		lvResult.setOnItemClickListener(new itemClicListener());
 
 	}
 
@@ -556,50 +542,48 @@ public class ResultActivity extends Activity {
 		ListView lvListView = (ListView) findViewById(R.id.lvResult);
 
 		GoodAdapter gAdapter = (GoodAdapter) lvListView.getAdapter();
-		Good gd = (Good) gAdapter.getItem(position);
+		Good good = (Good) gAdapter.getItem(position);
 		switch (item.getItemId()) {
+		
 		case R.id.menuVideo:
-
 			Intent intent = new Intent(ResultActivity.this,
 					VideoPlayerActivity.class);
-
-			intent.putExtra("name", gd.getName());
-			intent.putExtra("url", ResultActivity.VIDEO_URL + gd.getId()
-					+ ".3gp");
+			intent.putExtra("name", good.getName());
+			intent.putExtra("url",
+					ResultActivity.VIDEO_URL + good.getId() + ".3gp");
 			startActivity(intent);
 			break;
 		case R.id.menuPosGood:
-			if (gd.getExactPosition().isEmpty()) {
-				CommonOperation.toast(this, "该商品无位置信息，暂时无法定位。");
+			if (good.getExactPosition().isEmpty()) {
+				CommonOperation.toast(ResultActivity.this,
+						"该商品无位置信息，暂时无法定位。");
 				break;
 			}
 			Intent mapintent = new Intent(ResultActivity.this,
 					MapPosActivity.class);
-			mapintent.putExtra("pos", gd.getExactPosition());
+			mapintent.putExtra("pos", good.getExactPosition());
 			startActivityForResult(mapintent, REQUEST_MapPos);
 			break;
 		case R.id.menuDetail:
-			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(gd
-					.getUrl()));
-			startActivity(browserIntent);
+			CommonOperation.startWebBrowser(ResultActivity.this, good.getUrl());
 			break;
 		case R.id.menuAgain:
 			File file = new File(Const.APP_DIR_TEMP
-					+ String.valueOf(gd.getId()) + ".jpg");
+					+ String.valueOf(good.getId()) + ".jpg");
 			if (file.exists()) {
 				Intent intent2 = new Intent(ResultActivity.this,
 						FixPhotoActivity.class);
 				// intent.putExtra("bitmap", photo);
-				intent2.putExtra("bitmap", CommonOperation
-						.bitmapToBytes(BitmapFactory
-								.decodeFile(Const.APP_DIR_TEMP
-										+ String.valueOf(gd.getId()) + ".jpg")));
+				intent2.putExtra("bitmap",
+								Const.APP_DIR_TEMP
+										+ String.valueOf(good.getId())
+										+ ".jpg");
 				startActivity(intent2);
 				finish();
 			} else {
 				{
-					Toast.makeText(ResultActivity.this, "该商品暂无缩略图，无法搜索。",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(ResultActivity.this,
+							"该商品暂无缩略图，无法搜索。", Toast.LENGTH_LONG).show();
 				}
 			}
 		default:
@@ -612,11 +596,14 @@ public class ResultActivity extends Activity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menuLogin:
+		case R.id.menuGallary:
+			glyResult.setVisibility(View.VISIBLE);
+			lvResult.setVisibility(View.INVISIBLE);
 			break;
 
-		case R.id.menuexit:
-			finish();
+		case R.id.menuList:
+			glyResult.setVisibility(View.INVISIBLE);
+			lvResult.setVisibility(View.VISIBLE);
 			break;
 		}
 		return super.onMenuItemSelected(featureId, item);
