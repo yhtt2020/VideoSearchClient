@@ -68,11 +68,11 @@ public class PhotoFixer extends ImageView {
 	// 获取修正过的图片
 	public Bitmap getFixedBitmap() {
 		if (startX == 0 && startY == 0 && endX == 0 && endY == 0) {
-			Bitmap rs;
-			setDrawingCacheEnabled(true);
-			rs=Bitmap.createBitmap(getDrawingCache());
-			setDrawingCacheEnabled(false);
-			return rs;
+			//Bitmap rs;
+			//setDrawingCacheEnabled(true);
+			//rs=Bitmap.createBitmap(getDrawingCache());
+			//setDrawingCacheEnabled(false);
+			return cacheBitmap;
 		} else {
 			int x = (int) (Math.min(startX, endX));
 			int y = (int) (Math.min(startY, endY));
@@ -164,12 +164,9 @@ public class PhotoFixer extends ImageView {
 		Matrix matrix = new Matrix();
 		matrix.setRotate(degree);
 		// 修改图片
-		this.selectAll();
 		this.postInvalidate();
 		Bitmap rs;
-		setDrawingCacheEnabled(true);
-		rs=Bitmap.createBitmap(getDrawingCache());
-		setDrawingCacheEnabled(false);
+		rs=Bitmap.createBitmap(cacheBitmap);
 		cacheBitmap = Bitmap.createBitmap(rs, 0, 0, photoWidth,
 				photoHeight, matrix, true);
 		// 重设图片宽高
