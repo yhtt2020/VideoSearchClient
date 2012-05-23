@@ -50,7 +50,7 @@ import android.widget.Toast;
 
 public class LeadActivity extends Activity implements OnClickListener {
 
-	private static final String HTTP_AD = "http://m.taobao.com/channel/act/sale/t-shirt.html?sid=9896c162f322c7c6&spm=41.135707.248138.3&sprefer=sygd07";
+	private static final String HTTP_AD = "http://click.mz.simba.taobao.com/cc_mt?spm=1.1000386.0.977&p=&s=26272408&e=XnxifFTVjKNfE%2BsOcgSxxVyLpFFcPLwquXK9fXcQVc2ZfjCWqmSY5n0kbxnCvG1bnX0ojOzgUrRQ8AacoKLtEBYS9KGEaVUz1wOzQXD7wzt6HlhHe1IYMo43n5qRqFwO4fMBCTRWzHJLoI9AJrckpE5PNfaaPQMPLoyJIlMVkCvRSDV5o2KOQBW3Te0Aq5b5me4Q7SQivhKE8IKXDtdIJxQQepyaGB02bGsnlfqenHoQCCWOw%2BxZFzviREy2Fmh2B0N%2BPamEHEgasFPaY8IQ47YdJWjfhN%2FMaP5r78s%2BAsmYGv1K%2B5vt5fSsywzqcDD1%2FHcyiu1tZ9%2F%2FIGAoBE2y8V7jT7qW5f9SkOW3NYTtscyCwjvh%2Fsrcb7GauymMwEaz%2Fj%2BCLIlmFDaJDpf6nRuDzcZy%2Fifv%2Fe5E&ec=c1izpYN7Ml8tK63aRVPJSQ%3D%3D&c=53788";
 	private static final int RECODE_TAKEPHOTO = 0x001;
 	private static final int RECODE_CHOOSEPHOTO = 0x002;
 	private static final int RECODE_TAKEVIDEO = 0x003;
